@@ -42,7 +42,9 @@ export default {
   color: white;
 }
 .list-component {
-  padding: 1rem;
+  padding: 0 2rem;
+  margin: 0 auto;
+  max-width: 600px;
   text-align: left;
 }
 
