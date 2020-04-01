@@ -1,18 +1,27 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <img alt="Vue logo" class="logo" src="../assets/pulsar_vtb_logo.svg">
+    <WodList />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue';
+import WodList from '@/components/WodList.vue';
 
 export default {
   name: 'Home',
   components: {
-    HelloWorld,
+    WodList,
   },
 };
 </script>
+
+<style lang="scss" scoped>
+  .logo {
+    width: 100%;
+    max-width: 700px;
+    margin: 1rem auto;
+    padding: 0 1rem;
+  }
+</style>
