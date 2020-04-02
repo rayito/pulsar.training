@@ -2,9 +2,9 @@
   <section class="list-component">
     <h1 class="title">WODs ANTERIORES</h1>
     <ul>
-      <li v-for="wod in wodList" v-bind:key="wod.date">
-        <router-link to="/building">
-          <span class="day-name">{{ wod.day_name }}</span>{{ wod.date }}
+      <li v-for="wod in sortedWods" v-bind:key="wod.timestamp">
+        <router-link :to="wod.routeDate">
+          <span class="day-name">{{ wod.day }}</span>{{ wod.simpleDate }}
         </router-link>
       </li>
     </ul>
@@ -12,6 +12,16 @@
 </template>
 
 <script>
+const DAYS = [
+  'Lunes',
+  'Martes',
+  'Miércoles',
+  'Jueves',
+  'Viernes',
+  'Sábado',
+  'Domingo',
+];
+
 export default {
   name: 'WodList',
   data() {
@@ -20,9 +30,27 @@ export default {
     };
   },
   created() {
-    this.wodList.push({ day_name: 'Martes', date: '31/03/2020' });
-    this.wodList.push({ day_name: 'Lunes', date: '30/03/2020' });
-    this.wodList.push({ day_name: 'Sábado', date: '28/03/2020' });
+    this.wodList.push(this.dateConstructor(new Date('March 27, 2020')));
+    this.wodList.push(this.dateConstructor(new Date('March 28, 2020')));
+    this.wodList.push(this.dateConstructor(new Date('March 30, 2020')));
+    this.wodList.push(this.dateConstructor(new Date('March 31, 2020')));
+    this.wodList.push(this.dateConstructor(new Date('April 1, 2020')));
+    this.wodList.push(this.dateConstructor(new Date('April 2, 2020')));
+  },
+  computed: {
+    sortedWods: function sortedWods() {
+      return this.wodList.slice().sort((a, b) => b.timestamp - a.timestamp);
+    },
+  },
+  methods: {
+    dateConstructor: function dateConstructor(date) {
+      return {
+        day: DAYS[date.getDay() - 1],
+        simpleDate: `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`,
+        routeDate: `${date.getFullYear()}${date.getMonth() + 1}${date.getDate()}`,
+        timestamp: date.getTime(),
+      };
+    },
   },
 };
 </script>
@@ -44,7 +72,7 @@ export default {
 .list-component {
   padding: 0 2rem;
   margin: 0 auto;
-  max-width: 600px;
+  max-width: 650px;
   text-align: left;
 }
 
@@ -53,9 +81,14 @@ ul {
   padding: 0;
   display: flex;
   flex-direction: column;
+
+  @media screen and (min-width: 600px) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
 }
 li {
-
+  margin: .25rem 0;
   a {
     font-size: 2rem;
     font-style: oblique;
@@ -65,7 +98,7 @@ li {
 
     .day-name {
       display: inline-block;
-      width: 100px;
+      margin-right: 1rem;
     }
   }
 }

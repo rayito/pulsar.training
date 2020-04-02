@@ -155,7 +155,7 @@ body {
       }
     }
 
-    @media screen and (min-width: 550px) {
+    @media screen and (min-width: 600px) {
       margin: 0 1rem;
       font-size: 3rem;
 
