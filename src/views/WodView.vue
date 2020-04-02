@@ -1,5 +1,16 @@
 <template>
   <div class="about">
-    <h1>El WOD de hoy</h1>
+    <WodComponent :date="$route.params.date" />
   </div>
 </template>
+
+<script>
+import WodComponent from '@/components/WodComponent.vue';
+
+export default {
+  name: 'WodView',
+  components: {
+    WodComponent,
+  },
+};
+</script>

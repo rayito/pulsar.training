@@ -2,7 +2,9 @@
   <section class="list-component">
     <h1 class="title">WODs ANTERIORES</h1>
     <ul>
-      <li v-for="wod in sortedWods" v-bind:key="wod.timestamp">
+      <li v-for="wod in sortedWods"
+          v-bind:key="wod.timestamp"
+          v-bind:class="{ weekend: wod.dayNumber >= 5}">
         <router-link :to="wod.routeDate">
           <span class="day-name">{{ wod.day }}</span>{{ wod.simpleDate }}
         </router-link>
@@ -46,10 +48,22 @@ export default {
     dateConstructor: function dateConstructor(date) {
       return {
         day: DAYS[date.getDay() - 1],
-        simpleDate: `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`,
-        routeDate: `${date.getFullYear()}${date.getMonth() + 1}${date.getDate()}`,
+        dayNumber: date.getDay() - 1,
+        simpleDate: this.leadZeros(date, false),
+        routeDate: `/wod/${this.leadZeros(date, true)}`,
         timestamp: date.getTime(),
       };
+    },
+    leadZeros: function leadZeros(date, leadingYear) {
+      const day = `0${date.getDate()}`;
+      const month = `0${date.getMonth() + 1}`;
+      let zeroedDate = '';
+      if (leadingYear) {
+        zeroedDate = `${date.getFullYear()}-${month.slice(-2)}-${day.slice(-2)}`;
+      } else {
+        zeroedDate = `${day.slice(-2)}/${month.slice(-2)}/${date.getFullYear()}`;
+      }
+      return zeroedDate;
     },
   },
 };
@@ -89,6 +103,15 @@ ul {
 }
 li {
   margin: .25rem 0;
+
+  &.weekend {
+    margin-top: 1rem;
+
+    @media screen and (min-width: 600px) {
+      margin-top: .25rem;
+    }
+  }
+
   a {
     font-size: 2rem;
     font-style: oblique;
