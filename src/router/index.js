@@ -12,14 +12,6 @@ const routes = [
     component: Home,
   },
   {
-    path: '/today-wod',
-    name: 'WOD de hoy',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/WodView.vue'),
-  },
-  {
     path: '/building',
     name: 'Construcsió',
     component: () => import('../views/Construcsio.vue'),
@@ -32,6 +24,7 @@ const routes = [
 ];
 
 const router = new VueRouter({
+  mode: 'history',
   routes,
 });
 

@@ -76,7 +76,9 @@ export default {
   },
   computed: {
     fullDate: function fullDate() {
-      const newDate = new Date(this.date);
+      const newDate = this.date === 'today-wod'
+        ? new Date()
+        : new Date(this.date);
       return {
         day: DAYS[newDate.getDay() - 1],
         dayNumber: newDate.getDay() - 1,
