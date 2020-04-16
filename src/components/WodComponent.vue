@@ -4,50 +4,18 @@
       <span class="day-name">{{ fullDate.day }}</span>{{ fullDate.simpleDate }}
     </h1>
     <div class="wod">
-      <div class="wod__block">
-        <h2>/WARM UP</h2>
-        <div class="block__container">
-          <div class="block__rounds">
-            <span class="rounds-text">3 ROUNDS</span>
-          </div>
-          <div class="block__moves">
-            <ul>
-              <li>20 D.U. // 30 S.U. // 30 SKIPPING</li>
-              <li>1 WALL CLIMB</li>
-              <li>2 BURPEE TO TARGET</li>
-              <li>3 WALL CLIMB</li>
-              <li>4 ONE HAND BURPEE</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="wod__block">
-        <h2>/SKILL</h2>
-        <div class="block__container">
-          <div class="block__rounds">
-            <span class="rounds-text">5 ROUNDS</span>
-          </div>
-          <div class="block__moves">
-            <ul>
-              <li>A) 12" STRICT H.S.P.U.</li>
-
-              <li>B) 48" STRICT PRESS</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="wod__block">
-        <h2>/METCON</h2>
-        <div class="block__container">
-          <div class="block__rounds">
-            <span class="rounds-text">EMOM 15'</span>
-          </div>
-          <div class="block__moves">
-            <ul>
-              <li>I) 35 O.H.S. PICA</li>
-              <li>II) MAX BURPEES OVER PVC</li>
-              <li>III) REST</li>
-            </ul>
+      <div class="wod__block" v-for="block in wod" v-bind:key="block.type">
+        <h2 class="block__type">/{{ block.type }}</h2>
+        <div class="sub-block" v-for="subBlock in block.subBlocks" :key="subBlock.order">
+          <div class="block__container">
+            <div class="block__rounds" v-if="subBlock.rounds != ''">
+              <span class="rounds-text">{{ subBlock.rounds }}</span>
+            </div>
+            <div class="block__moves">
+              <ul>
+                <li v-for="move in subBlock.moves" :key="move">{{ move }}</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -65,13 +33,14 @@ const DAYS = [
   'Sábado',
   'Domingo',
 ];
+const contentful = require('contentful');
 
 export default {
   name: 'WodComponent',
   props: ['date'],
   data() {
     return {
-      wodList: [],
+      wodBlocks: [],
     };
   },
   computed: {
@@ -86,6 +55,40 @@ export default {
         timestamp: newDate.getTime(),
       };
     },
+    wod() {
+      let blocks = this.wodBlocks.map((e) => e.fields);
+      blocks = blocks.sort((a, b) => a.order - b.order);
+      const blockTypes = [];
+      const finalBlocks = [];
+      blocks.forEach((e) => {
+        if ( !blockTypes.includes(e.type) ) {
+          blockTypes.push(e.type);
+          finalBlocks.push({
+            type: e.type,
+            subBlocks: [e],
+          });
+        } else {
+          finalBlocks.forEach((b) => {
+            if (b.type === e.type) {
+              b.subBlocks.push(e);
+            }
+          });
+        }
+      });
+      return finalBlocks;
+    },
+  },
+  created: function created() {
+    const client = contentful.createClient({
+      space: '1cfepwuemnrk',
+      accessToken: 'v13Y_ubATC1c-6Olh2owS6eb5QvE4FyJiqsEw9irkjo',
+    });
+    client.getEntries({
+      content_type: 'wod',
+      'fields.date': '2020-04-16',
+    })
+    .then((response) => { this.wodBlocks = response.items; })
+    .catch(console.error);
   },
   methods: {
     leadZeros: function leadZeros(date, leadingYear) {
@@ -144,6 +147,14 @@ h2 {
   display: grid;
   grid-template-columns: 1fr;
   gap: 2rem;
+
+  * {
+    text-transform: uppercase;
+  }
+
+  .sub-block {
+    margin-bottom: .5rem;
+  }
 }
 
 .block__container {
