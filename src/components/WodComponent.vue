@@ -45,15 +45,17 @@ export default {
   },
   computed: {
     fullDate: function fullDate() {
-      const newDate = this.date === 'today-wod'
+      return {
+        day: DAYS[this.newDate.getDay() - 1],
+        dayNumber: this.newDate.getDay() - 1,
+        simpleDate: this.leadZeros(this.newDate, false, '/'),
+        timestamp: this.newDate.getTime(),
+      };
+    },
+    newDate() {
+      return this.date === 'today-wod'
         ? new Date()
         : new Date(this.date);
-      return {
-        day: DAYS[newDate.getDay() - 1],
-        dayNumber: newDate.getDay() - 1,
-        simpleDate: this.leadZeros(newDate, false),
-        timestamp: newDate.getTime(),
-      };
     },
     wod() {
       let blocks = this.wodBlocks.map((e) => e.fields);
@@ -68,11 +70,7 @@ export default {
             subBlocks: [e],
           });
         } else {
-          finalBlocks.forEach((b) => {
-            if (b.type === e.type) {
-              b.subBlocks.push(e);
-            }
-          });
+          finalBlocks.find((b) => b.type === e.type).subBlocks.push(e);
         }
       });
       return finalBlocks;
@@ -83,22 +81,30 @@ export default {
       space: '1cfepwuemnrk',
       accessToken: 'v13Y_ubATC1c-6Olh2owS6eb5QvE4FyJiqsEw9irkjo',
     });
+    let date = '';
+    if (this.date === 'today-wod') {
+      date = this.leadZeros(this.newDate, true, '-');
+    } else {
+      date = this.date;
+    }
+    console.log(date);
     client.getEntries({
       content_type: 'wod',
-      'fields.date': '2020-04-16',
+      'fields.date': date,
     })
     .then((response) => { this.wodBlocks = response.items; })
     .catch(console.error);
   },
   methods: {
-    leadZeros: function leadZeros(date, leadingYear) {
+    leadZeros: function leadZeros(date, leadingYear, divider) {
+      const div = divider || '/';
       const day = `0${date.getDate()}`;
       const month = `0${date.getMonth() + 1}`;
       let zeroedDate = '';
       if (leadingYear) {
-        zeroedDate = `${date.getFullYear()}-${month.slice(-2)}-${day.slice(-2)}`;
+        zeroedDate = `${date.getFullYear()}${div}${month.slice(-2)}${div}${day.slice(-2)}`;
       } else {
-        zeroedDate = `${day.slice(-2)}/${month.slice(-2)}/${date.getFullYear()}`;
+        zeroedDate = `${day.slice(-2)}${div}${month.slice(-2)}${div}${date.getFullYear()}`;
       }
       return zeroedDate;
     },
@@ -186,7 +192,7 @@ h2 {
       height: 100%;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: center;
     }
   }
 }

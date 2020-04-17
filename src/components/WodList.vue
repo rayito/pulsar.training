@@ -24,6 +24,8 @@ const DAYS = [
   'Domingo',
 ];
 
+const contentful = require('contentful');
+
 export default {
   name: 'WodList',
   data() {
@@ -32,12 +34,20 @@ export default {
     };
   },
   created() {
-    this.wodList.push(this.dateConstructor(new Date('March 27, 2020')));
-    this.wodList.push(this.dateConstructor(new Date('March 28, 2020')));
-    this.wodList.push(this.dateConstructor(new Date('March 30, 2020')));
-    this.wodList.push(this.dateConstructor(new Date('March 31, 2020')));
-    this.wodList.push(this.dateConstructor(new Date('April 1, 2020')));
-    this.wodList.push(this.dateConstructor(new Date('April 2, 2020')));
+    let entries = [];
+    const client = contentful.createClient({
+      space: '1cfepwuemnrk',
+      accessToken: 'v13Y_ubATC1c-6Olh2owS6eb5QvE4FyJiqsEw9irkjo',
+    });
+    client.getEntries({
+      content_type: 'wod',
+    })
+    .then((response) => {
+      entries = response.items;
+      console.log(entries);
+      this.getWodDates(entries);
+    })
+    .catch(console.error);
   },
   computed: {
     sortedWods: function sortedWods() {
@@ -45,23 +55,33 @@ export default {
     },
   },
   methods: {
+    getWodDates(entries) {
+      const dates = [];
+      entries.forEach((e) => {
+        if ( !dates.includes(e.fields.date) ) {
+          dates.push(e.fields.date);
+          this.wodList.push(this.dateConstructor(new Date(e.fields.date)));
+        }
+      });
+    },
     dateConstructor: function dateConstructor(date) {
       return {
         day: DAYS[date.getDay() - 1],
         dayNumber: date.getDay() - 1,
         simpleDate: this.leadZeros(date, false),
-        routeDate: `/wod/${this.leadZeros(date, true)}`,
+        routeDate: `/wod/${this.leadZeros(date, true, '-')}`,
         timestamp: date.getTime(),
       };
     },
-    leadZeros: function leadZeros(date, leadingYear) {
+    leadZeros: function leadZeros(date, leadingYear, divider) {
+      const div = divider || '/';
       const day = `0${date.getDate()}`;
       const month = `0${date.getMonth() + 1}`;
       let zeroedDate = '';
       if (leadingYear) {
-        zeroedDate = `${date.getFullYear()}-${month.slice(-2)}-${day.slice(-2)}`;
+        zeroedDate = `${date.getFullYear()}${div}${month.slice(-2)}${div}${day.slice(-2)}`;
       } else {
-        zeroedDate = `${day.slice(-2)}/${month.slice(-2)}/${date.getFullYear()}`;
+        zeroedDate = `${day.slice(-2)}${div}${month.slice(-2)}${div}${date.getFullYear()}`;
       }
       return zeroedDate;
     },

@@ -15,44 +15,6 @@
 
 @font-face {
   font-family: 'Chromoxome';
-  font-style: normal;
-  font-weight: 100;
-  src: url("./assets/fonts/ChromoxomePro-ExtraLight.woff2") format('woff2'),
-       url("./assets/fonts/ChromoxomePro-ExtraLight.woff") format('woff');
-}
-
-@font-face {
-  font-family: 'Chromoxome';
-  font-style: normal;
-  font-weight: 300;
-  src: url("./assets/fonts/ChromoxomePro-Light.woff2") format('woff2'),
-       url("./assets/fonts/ChromoxomePro-Light.woff") format('woff');
-}
-
-@font-face {
-  font-family: 'Chromoxome';
-  font-style: normal;
-  font-weight: 500;
-  src: url("./assets/fonts/ChromoxomePro-Medium.woff2") format('woff2'),
-       url("./assets/fonts/ChromoxomePro-Medium.woff") format('woff');
-}
-@font-face {
-  font-family: 'Chromoxome';
-  font-style: normal;
-  font-weight: 700;
-  src: url("./assets/fonts/ChromoxomePro-SemiBold.woff2") format('woff2'),
-       url("./assets/fonts/ChromoxomePro-SemiBold.woff") format('woff');
-}
-@font-face {
-  font-family: 'Chromoxome';
-  font-style: normal;
-  font-weight: 900;
-  src: url("./assets/fonts/ChromoxomePro-Bold.woff2") format('woff2'),
-       url("./assets/fonts/ChromoxomePro-Bold.woff") format('woff');
-}
-
-@font-face {
-  font-family: 'Chromoxome';
   font-style: oblique;
   font-weight: 100;
   src: url("./assets/fonts/ChromoxomePro-ExtraLightOblique.woff2") format('woff2'),
