@@ -4,18 +4,24 @@
       <span class="day-name">{{ fullDate.day }}</span>{{ fullDate.simpleDate }}
     </h1>
     <div class="wod">
-      <div class="wod__block" v-for="block in wod" v-bind:key="block.type">
-        <h2 class="block__type">/{{ block.type }}</h2>
-        <div class="sub-block" v-for="subBlock in block.subBlocks" :key="subBlock.order">
+      <div class="wod__phase" v-for="phase in wod" v-bind:key="phase.type">
+        <h2 class="phase__type">/{{ phase.type }}</h2>
+        <div class="block" v-for="block in phase.blocks" :key="block.order">
+          <div class="block__subtitle" v-if="block.subtitle">
+          {{ block.subtitle }}
+        </div>
           <div class="block__container">
-            <div class="block__rounds" v-if="subBlock.rounds != ''">
-              <span class="rounds-text">{{ subBlock.rounds }}</span>
+            <div class="block__rounds" v-if="block.rounds != ''">
+              <span class="rounds-text">{{ block.rounds }}</span>
             </div>
             <div class="block__moves">
               <ul>
-                <li v-for="move in subBlock.moves" :key="move">{{ move }}</li>
+                <li v-for="move in block.moves" :key="move">{{ move }}</li>
               </ul>
             </div>
+          </div>
+          <div class="block__rest" v-if="block.rest">
+            {{ block.rest }}
           </div>
         </div>
       </div>
@@ -67,36 +73,41 @@ export default {
           blockTypes.push(e.type);
           finalBlocks.push({
             type: e.type,
-            subBlocks: [e],
+            blocks: [e],
           });
         } else {
-          finalBlocks.find((b) => b.type === e.type).subBlocks.push(e);
+          finalBlocks.find((b) => b.type === e.type).blocks.push(e);
         }
       });
       return finalBlocks;
     },
   },
-  created: function created() {
-    const client = contentful.createClient({
-      space: '1cfepwuemnrk',
-      accessToken: 'v13Y_ubATC1c-6Olh2owS6eb5QvE4FyJiqsEw9irkjo',
-    });
-    let date = '';
-    if (this.date === 'today-wod') {
-      date = this.leadZeros(this.newDate, true, '-');
-    } else {
-      date = this.date;
-    }
-    console.log(date);
-    client.getEntries({
-      content_type: 'wod',
-      'fields.date': date,
-    })
-    .then((response) => { this.wodBlocks = response.items; })
-    .catch(console.error);
+  created() {
+    this.fetchWod();
+  },
+  beforeUpdate() {
+    this.fetchWod();
   },
   methods: {
-    leadZeros: function leadZeros(date, leadingYear, divider) {
+    fetchWod() {
+      const client = contentful.createClient({
+        space: '1cfepwuemnrk',
+        accessToken: 'v13Y_ubATC1c-6Olh2owS6eb5QvE4FyJiqsEw9irkjo',
+      });
+      let date = '';
+      if (this.date === 'today-wod') {
+        date = this.leadZeros(this.newDate, true, '-');
+      } else {
+        date = this.date;
+      }
+      client.getEntries({
+        content_type: 'wod',
+        'fields.date': date,
+      })
+      .then((response) => { this.wodBlocks = response.items; })
+      .catch(console.error);
+    },
+    leadZeros(date, leadingYear, divider) {
       const div = divider || '/';
       const day = `0${date.getDate()}`;
       const month = `0${date.getMonth() + 1}`;
@@ -113,8 +124,9 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
-@import "~@/scss/variables.scss";
+<style  lang="scss">
+@import "~@/scss/_variables.scss";
+@import "~@/scss/_init.scss";
 
 * {
   font-family: "Chromoxome", sans-serif;
@@ -158,9 +170,27 @@ h2 {
     text-transform: uppercase;
   }
 
-  .sub-block {
+  .block {
     margin-bottom: .5rem;
   }
+}
+
+.block__container,
+.block__subtitle,
+.block__rest {
+  font-size: 1.2rem;
+  font-style: oblique;
+  font-weight: 500;
+  color: white;
+}
+
+.block__subtitle {
+  margin-top: -.5rem;
+  margin-bottom: .5rem;
+}
+
+.block__rest {
+  margin: .5rem 0 .5rem 2rem;
 }
 
 .block__container {
@@ -168,11 +198,7 @@ h2 {
   grid-template-columns: 30px 1fr;
   gap: 1rem;
   align-items: center;
-  font-size: 1.2rem;
-  font-style: oblique;
-  font-weight: 500;
-  color: white;
-
+  
   .block__rounds {
     display: flex;
     align-items: center;
@@ -195,12 +221,6 @@ h2 {
       justify-content: center;
     }
   }
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
 }
 
 </style>
