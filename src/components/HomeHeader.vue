@@ -18,7 +18,7 @@ export default {
   .home-header {
     position: relative;
     height: 576px;
-    background: url('~@/assets/images/portada.jpeg');
+    background: url('~@/assets/images/portada.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
