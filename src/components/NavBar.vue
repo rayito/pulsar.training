@@ -63,7 +63,7 @@ nav ul {
     font-weight: 500;
     font-size: 0.8rem;
     color: white;
-    opacity: 75%;
+    opacity: 0.75;
     text-transform: uppercase;
     text-decoration: none;
     transition: font-weight linear .3s, color linear .3s;
