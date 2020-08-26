@@ -35,7 +35,7 @@ export default {
       left: 0;
       z-index: 10;
       background: #050505;
-      opacity: 80%;
+      opacity: 0.75;
     }
 
     h1 {
