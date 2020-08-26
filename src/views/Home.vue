@@ -1,27 +1,23 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" class="logo" src="../assets/pulsar_vtb_logo.svg">
-    <WodList />
+    <SideFloat />
+    <HomeHeader />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import WodList from '@/components/WodList.vue';
+import SideFloat from '@/components/SideFloat.vue';
+import HomeHeader from '@/components/HomeHeader.vue';
 
 export default {
   name: 'Home',
   components: {
-    WodList,
+    SideFloat,
+    HomeHeader,
   },
 };
 </script>
 
 <style lang="scss" scoped>
-  .logo {
-    width: 100%;
-    max-width: 700px;
-    margin: 1rem auto;
-    padding: 0 1rem;
-  }
+  
 </style>
