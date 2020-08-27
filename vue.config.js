@@ -1,6 +1,6 @@
 module.exports = {
   pwa: {
-    name: 'My App',
+    name: 'Pulsar Training',
     themeColor: '#5BB89E',
     msTileColor: '#000000',
     appleMobileWebAppCapable: 'yes',
