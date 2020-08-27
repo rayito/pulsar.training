@@ -17,6 +17,7 @@ module.exports = {
     'func-names': 'off',
     'space-in-parens': 'off',
     'no-trailing-spaces': 'off',
-    'no-unused-vars': 'off'
+    'no-unused-vars': 'off',
+    'object-shorthand': 'off',
   },
 };
