@@ -31,7 +31,7 @@ export default {
     width: 270px;
 
     @include respond-to(descop) {
-      top: 2rem;
+      top: calc(2rem + 88px) ;
       gap: 1.5rem;
       width: 310px;
       padding: 1rem 2rem;

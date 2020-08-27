@@ -32,6 +32,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 56px;
 
     &:after {
       content: '';
@@ -51,6 +52,7 @@ export default {
 
     @include respond-to(descop) {
       height: 660px;
+      margin: 0;
     }
   }
 

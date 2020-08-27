@@ -1,5 +1,5 @@
 <template>
-  <header class="header">
+  <header class="header" :class="{scrolled: scrolled}">
     <router-link 
       @click.native="closeMenu" 
       to="/" class="header__logo">
@@ -8,10 +8,10 @@
     </router-link>
 
     <div class="clickable-area" 
-         @click="toggleMenu">
+         @click="toggleMenu"
+         v-if="windowWidth < 426">
       <div class="burger-icon" 
-           :class="{ 'burger-icon--open': isMenuOpen }"
-           v-if="windowWidth < 426">
+           :class="{ 'burger-icon--open': isMenuOpen }">
         <span class="stick"></span>
         <span class="stick middle"></span>
         <span class="stick"></span>
@@ -55,7 +55,7 @@
         </li>
       </ul>
     </nav>
-    <a class="reserve">RESERVAR CLASE GRATIS</a>
+    <a class="reserve">RESERVAR PRUEBA GRATIS</a>
   </header>
 </template>
 
@@ -66,14 +66,33 @@ export default {
     return {
       windowWidth: window.innerWidth,
       isMenuOpen: false,
+      scrollTop: window.pageYOffset,
+      scrolled: false,
     };
   },
   mounted() {
+    window.addEventListener('scroll', this.handleScroll);
+
     window.onresize = () => {
       this.windowWidth = window.innerWidth;
     };
   },
+  destroyed() {
+    window.removeEventListener('scroll', this.handleScroll);
+  },
+  watch: {
+    scrollTop: function (newValue) {
+      if ( newValue > 50 ) {
+        this.scrolled = true;
+      } else {
+        this.scrolled = false;
+      }
+    },
+  },
   methods: {
+    handleScroll: function () {
+      this.scrollTop = window.pageYOffset;
+    },
     toggleMenu: function () {
       this.isMenuOpen = !this.isMenuOpen;
     },
@@ -86,25 +105,61 @@ export default {
 
 <style lang="scss" scoped>
 header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  z-index: 50;
   display: grid;
   gap: 1rem;
   grid-template-areas: 
     "navbar logo contact";
   grid-template-columns: auto 1fr auto;
   align-items: center;
+  height: 56px;
   padding: 10px 8px;
+  background-color: #050505;
+  transition: background-color ease .5s, 
+              box-shadow ease .5s;
   
+  &.scrolled {
+    box-shadow: 0 -1px 5px 0px #050505;
+  }
+
   @include respond-to(not-phone) {
     grid-template-areas: 
     "logo navbar contact";
+  }
+
+  @include respond-to(tablet) {
+    padding: 10px 24px;
+  }
+
+  @include respond-to(descop) {
+    height: 88px;
     padding: .75rem 2rem;
     border-top: solid 4px $pulsar-green;
+    background-color: rgba(5,5,5,.6);
+    
+    &.scrolled {
+      background-color: #050505;
+    }
   }
 }
 
 .header__logo {
   grid-area: logo;
   display: flex;
+
+  img {
+    @include respond-to(tablet) {
+      height: 28px;
+    }
+
+    @include respond-to(tablet) {
+      height: 38px;
+    }
+  }
 }
 
 .header__navbar {
@@ -123,7 +178,7 @@ header {
     margin: 0 .5rem;
     font-family: "Chromoxome", sans-serif;
     font-weight: 500;
-    font-size: 0.8rem;
+    font-size: 14px;
     color: white;
     opacity: 0.75;
     text-transform: uppercase;
@@ -200,12 +255,11 @@ header {
     }
   }
 
-  @include respond-to(not-phone) {
+  @include respond-to(tablet) {
     grid-area: navbar;
 
     ul {
       flex-direction: row;
-      padding: 1rem;
     }
   }
 }
@@ -223,10 +277,8 @@ header {
   font-size: 14px;
   line-height: 1;
 
-  @include respond-to(not-phone) {
-    height: 42px;
-    padding: .75rem 1rem;
-    font-size: 1rem;
+  @include respond-to(tablet) {
+    height: 36px;
   }
 }
 
