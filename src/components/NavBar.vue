@@ -220,7 +220,7 @@ header {
 
     ul {
       flex-direction: column;
-      height: 100%;
+      height: calc(100% - 56px);
     }
 
     .header__item {
