@@ -18,17 +18,24 @@ export default {
 
 <style lang="scss" scoped>
   .sidefloat {
-    position: fixed;
-    z-index: 1000;
+    position: absolute;
+    z-index: 20;
     right: 0;
-    top: 25%;
+    top: 1rem;
     display: grid;
     grid-template-columns: auto 1fr;
-    gap: 1.5rem;
+    gap: 18px;
     align-items: center;
-    padding: 1rem 2rem;
+    padding: .5rem 1rem;
     background: white;
-    width: 310px;
+    width: 270px;
+
+    @include respond-to(descop) {
+      top: 2rem;
+      gap: 1.5rem;
+      width: 310px;
+      padding: 1rem 2rem;
+    }
   }
 
   .sidefloat__title {

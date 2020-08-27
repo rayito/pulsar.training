@@ -1,0 +1,27 @@
+$phone: 425px;
+$tablet: 768px;
+
+@mixin respond-to($breakpoint) {
+    @if $breakpoint == 'phone' {
+        @media (max-width: $phone) {
+            @content;
+        }
+    } @else if $breakpoint == 'not-phone' {
+        @media (min-width: $phone + 1) {
+            @content;
+        }
+    } @else if $breakpoint == 'tablet' {
+        @media (min-width: $phone + 1) and (max-width: $tablet) {
+            @content;
+        }
+    } @else if $breakpoint == 'descop' {
+        @media (min-width: $tablet + 1) {
+            @content;
+        }
+    }
+}
+
+@mixin same-font-and-height($font-size) {
+    font-size: $font-size;
+    line-height: $font-size;
+}
