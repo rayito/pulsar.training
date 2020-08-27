@@ -44,6 +44,14 @@ export default {
       background: #050505;
       opacity: 0.75;
     }
+
+    @include respond-to(tablet) {
+      height: 390px;
+    }
+
+    @include respond-to(descop) {
+      height: 660px;
+    }
   }
 
   .bestiaparda {
@@ -65,6 +73,31 @@ export default {
       background: $pulsar-gradient-ufo;
       transform: rotate(9deg);
     }
+
+    @include respond-to(tablet) {
+      max-width: 415px;
+      left: 2rem;
+
+      &:before {
+        left: 5px;
+        height: 275px;
+        transform: rotate(9deg);
+      }
+    }
+
+    @include respond-to(descop) {
+      max-width: 633px;
+      left: 4rem;
+      bottom: 4rem;
+
+      &:before {
+        width: 5px;
+        top: -20px;
+        left: -5px;
+        height: 355px;
+        transform: rotate(9deg);
+      }
+    }
   }
 
   .bestiaparda__season {
@@ -75,8 +108,15 @@ export default {
     font-family: $chromo;
     font-style: oblique;
     font-weight: 900;
-    font-size: 1rem;
-    line-height: 1rem;
+    @include same-font-and-height(.8rem);
+
+    @include respond-to(tablet) {
+      @include same-font-and-height(.9rem);
+    }
+
+    @include respond-to(descop) {
+      @include same-font-and-height(1rem);
+    }
   }
 
   .bestiaparda__hash,
@@ -91,6 +131,14 @@ export default {
   .bestiaparda__hash {
     padding-left: 1.35rem;
     @include same-font-and-height(1.25rem);
+
+    @include respond-to(tablet) {
+      @include same-font-and-height(2rem);
+    }
+
+    @include respond-to(descop) {
+      @include same-font-and-height(2.5rem);
+    }
   }
 
   .bestiaparda__text {
@@ -99,13 +147,26 @@ export default {
     font-weight: 900;
     @include same-font-and-height(3rem);
     text-indent: 7px;
+
+    @include respond-to(tablet) {
+      @include same-font-and-height(4.5rem);
+    }
+
+    @include respond-to(descop) {
+      margin-bottom: 2rem;
+      @include same-font-and-height(6rem);
+    }
   }
 
   .bestiaparda__reserve {
-    padding: 10px 12px;
+    padding: 12px 16px;
     @include same-font-and-height(14px);
     font-weight: 700;
     background: $pulsar-green;
     background: $pulsar-gradient-ufo;
+
+    @include respond-to(descop) {
+      @include same-font-and-height(1rem);
+    }
   }
 </style>
