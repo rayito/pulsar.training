@@ -100,7 +100,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   position: relative;
   color: #2c3e50;
-  background: #050505;
+  background: $bg-black;
   min-height: 100vh;
 }
 </style>

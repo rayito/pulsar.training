@@ -5,18 +5,23 @@
       <h1 class="bestiaparda__season">TEMPORADA 20/21</h1>
       <div class="bestiaparda__hash">#ModoBestiaPardaON</div>
       <div class="bestiaparda__text">PON A PRUEBA TUS LÍMITES</div>
-      <a class="bestiaparda__reserve">RESERVAR CLASE DE PRUEBA GRATIS</a>
+      <ActionButton 
+        class="bestiaparda__reserve" 
+        button-text="RESERVAR CLASE DE PRUEBA GRATIS"
+        button-style="solid" />
     </div>
   </section>
 </template>
 
 <script>
 import SideFloat from '@/components/SideFloat.vue';
+import ActionButton from '@/components/ActionButton.vue';
 
 export default {
   name: 'HomeHeader',
   components: {
     SideFloat,
+    ActionButton,
   },
 };
 </script>
@@ -42,7 +47,7 @@ export default {
       top: 0;
       left: 0;
       z-index: 10;
-      background: #050505;
+      background: $pulsar-black;
       opacity: 0.75;
     }
 

@@ -55,13 +55,21 @@
         </li>
       </ul>
     </nav>
-    <a class="reserve">RESERVAR PRUEBA GRATIS</a>
+    <ActionButton 
+      class="reserve" 
+      button-text="RESERVAR PRUEBA GRATIS" 
+    />
   </header>
 </template>
 
 <script>
+import ActionButton from '@/components/ActionButton.vue';
+
 export default {
   name: 'NavBar',
+  components: {
+    ActionButton,
+  },
   data() {
     return {
       windowWidth: window.innerWidth,
@@ -118,12 +126,12 @@ header {
   align-items: center;
   height: 56px;
   padding: 10px 8px;
-  background-color: #050505;
+  background-color: $pulsar-black;
   transition: background-color ease .5s, 
               box-shadow ease .5s;
   
   &.scrolled {
-    box-shadow: 0 -1px 5px 0px #050505;
+    box-shadow: 0 -1px 5px 0px $pulsar-black;
   }
 
   @include respond-to(not-phone) {
@@ -142,7 +150,7 @@ header {
     background-color: rgba(5,5,5,.6);
     
     &.scrolled {
-      background-color: #050505;
+      background-color: $pulsar-black;
     }
   }
 }
@@ -215,7 +223,7 @@ header {
     left: 0;
     height: 0;
     width: 100vw;
-    background: #050505;
+    background: $pulsar-black;
     transition: height ease .3s;
 
     ul {
@@ -266,20 +274,6 @@ header {
 
 .reserve {
   grid-area: contact;
-  height: 36px;
-  padding: 10px 12px;
-  border: solid 1px white;
-  color: white;
-  background: transparent;
-  font-family: "Chromoxome", sans-serif;
-  font-weight: 700;
-  font-style: oblique;
-  font-size: 14px;
-  line-height: 1;
-
-  @include respond-to(tablet) {
-    height: 36px;
-  }
 }
 
 .burger-icon {
