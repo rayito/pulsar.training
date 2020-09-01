@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import ActionButton from '@/components/ActionButton.vue';
+import ActionButton from '@/components/atoms/ActionButton.vue';
 
 export default {
   name: 'SideSection',
@@ -23,11 +23,35 @@ export default {
 
 <style lang="scss" scoped>
   .sidesection {
-    width: 260px;
-    padding: 1rem 1.5rem;
+    position: relative;
+    padding: 1.5rem;
     background: $pulsar-black;
     background: linear-gradient(314.56deg, #000000 0%, rgba(0, 0, 0, 0) 100%), $bg-black;
-    border-top: solid 8px $pulsar-green;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 8px;
+      background: $pulsar-green;
+      background: $pulsar-gradient-ufo
+    }
+
+    &.naked {
+      background: transparent;
+      padding-top: 0;
+      padding-bottom: 0;
+      
+      &::before {
+        display: none;
+      }
+    }
+
+    @include respond-to(descop) {
+      padding: 3rem 4rem;
+    }
   }
 
   .sidesection__title {
@@ -35,9 +59,13 @@ export default {
     font-family: $chromo;
     font-style: oblique;
     font-size: 1.5rem;
-    font-weight: 700;
+    font-weight: 900;
     color: white;
     text-transform: uppercase;
+
+    @include respond-to(descop) {
+      font-size: 2.5rem;
+    }
   }
 
   .sidesection__content,
@@ -49,11 +77,18 @@ export default {
     font-family: 'Roboto', sans-serif;
     font-size: 12px;
     line-height: 16px;
-    color: rgba(255,255,255,.65);
+    color: rgba(255,255,255,.75);
+
+    @include respond-to(descop) {
+      font-size: 1rem;
+      line-height: 1.5;
+    }
   }
   .sidesection__action {
-    display: block;
-    width: fit-content;
     margin-top: 1rem;
+
+    @include respond-to(descop) {
+      font-size: 1rem;
+    }
   }
 </style>

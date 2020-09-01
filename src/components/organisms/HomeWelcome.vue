@@ -11,12 +11,12 @@
 </template>
 
 <script>
-import SideSection from '@/components/SideSection.vue';
+import SideSection from '@/components/molecules/SideSection.vue';
 
 const sideSectionContent = 'Somos una comunidad única de apasionados por el fitness que ofrecemos clases con coaches de calidad, material premium, eventos exclusivos y una auténtica experiencia de entrenamiento. Desde el más novato al más experimentado atleta.';
 
 export default {
-  name: 'Welcome',
+  name: 'HomeWelcome',
   components: {
     SideSection,
   },
@@ -35,23 +35,34 @@ export default {
 <style lang="scss" scoped>
 .welcome {
   position: relative;
-  height: 400px;
+  min-height: 400px;
 }
 
 .welcome__sidesection {
   position: absolute;
   right: 2rem;
   bottom: 1rem;
+  width: 260px;
+
+  @include respond-to(descop) {
+    width: 60vw;
+    max-width: 620px;
+  }
 } 
 
 .bg-image {
-  position: absolute;
-  top: 0;
-  left: -2rem;
+  position: relative;
+  left: -4rem;
   width: 100vw;
 
   @include respond-to(tablet) {
+    left: 0;
     width: 80vw;
+  }
+
+  @include respond-to(descop) {
+    left: 2rem;
+    width: 75vw;
   }
 }
 </style>

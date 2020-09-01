@@ -20,8 +20,11 @@ export default {
 
 <style lang="scss" scoped>
 .button {
-  height: 36px;
-  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  height: 40px;
+  padding: 0 12px;
   color: white;
   font-family: "Chromoxome", sans-serif;
   font-weight: 700;

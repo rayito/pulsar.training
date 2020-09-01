@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import ActionButton from '@/components/ActionButton.vue';
+import ActionButton from '@/components/atoms/ActionButton.vue';
 
 export default {
   name: 'NavBar',

@@ -14,8 +14,8 @@
 </template>
 
 <script>
-import SideFloat from '@/components/SideFloat.vue';
-import ActionButton from '@/components/ActionButton.vue';
+import SideFloat from '@/components/molecules/SideFloat.vue';
+import ActionButton from '@/components/atoms/ActionButton.vue';
 
 export default {
   name: 'HomeHeader',
