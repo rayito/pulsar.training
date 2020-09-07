@@ -39,14 +39,14 @@ export default {
     url(~@/assets/images/racks.jpg);
   background-size: cover;
   background-repeat: no-repeat;
-  padding: 5rem 0;
+  padding: 15vw 0;
 
   @include respond-to(tablet) {
-    padding: 5rem 0;
+    padding: 10vw 0;
   }
 
   @include respond-to(descop) {
-    padding: 5rem 0;
+    padding: 8vw 0;
   }
 }
 
