@@ -7,7 +7,7 @@
       :action-text="sideSection.actionText"
     />
     <div class="images-block">
-      <img src="@/assets/images/racks.jpg" class="bg-image" alt="">
+      <img src="@/assets/images/mobility.jpg" class="bg-image" alt="">
       <div class="images__overlay">
         <img class="svg" src="@/assets/images/cross-haltero.svg">
       </div>
@@ -58,10 +58,12 @@ export default {
   position: relative;
   order: -1;
   overflow: hidden;
+  margin-bottom: 1.5rem;
 
   @include respond-to(not-phone) { 
     order: 0; 
     width: 50%;
+    margin: 0;
     max-height: 320px;
   }
 
@@ -81,10 +83,6 @@ export default {
     img {
       height: 100%;
       padding: 1rem .5rem;
-    }
-
-    .svg {
-
     }
   }
 }

@@ -23,7 +23,7 @@ export default {
   display: flex;
   align-items: center;
   width: fit-content;
-  height: 40px;
+  height: 36px;
   padding: 0 12px;
   color: white;
   font-family: "Chromoxome", sans-serif;
@@ -32,6 +32,11 @@ export default {
   font-size: 14px;
   line-height: 1;
   text-transform: uppercase;
+
+  @include respond-to(descop) {
+    height: 40px;
+    font-size: 1rem;
+  }
 
   &.ghost {
     border: solid 1px $pulsar-green;

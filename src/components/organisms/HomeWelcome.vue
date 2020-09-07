@@ -40,11 +40,16 @@ export default {
 
 .welcome__sidesection {
   position: absolute;
-  right: 2rem;
+  right: 1rem;
   bottom: 1rem;
   width: 260px;
 
+  @include respond-to(not-phone) {
+    right: 2rem;
+  }
+
   @include respond-to(descop) {
+    bottom: -5rem;
     width: 60vw;
     max-width: 620px;
   }
@@ -57,12 +62,12 @@ export default {
 
   @include respond-to(tablet) {
     left: 0;
-    width: 80vw;
+    width: 70vw;
   }
 
   @include respond-to(descop) {
     left: 2rem;
-    width: 75vw;
+    width: 65vw;
   }
 }
 </style>

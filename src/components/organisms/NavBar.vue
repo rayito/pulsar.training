@@ -193,6 +193,10 @@ header {
     text-decoration: none;
     transition: font-weight linear .3s, color linear .3s;
 
+    @include respond-to(descop) {
+      font-size: 1rem;
+    }
+
     &::after {
       content: "";
       position: absolute;
