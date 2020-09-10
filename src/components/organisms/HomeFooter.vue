@@ -30,6 +30,7 @@
           class="visit__action" />
       </div>
     </div>
+    <div class="footer__map"></div>
   </section>
 </template>
 
@@ -46,9 +47,20 @@ export default {
 
 <style lang="scss" scoped>
 .home-footer {
-  background: url("~@/assets/images/map.jpg");
-  background-size: cover;
+  display: flex;
+  flex-direction: column;
+
+  @include respond-to(not-phone) {
+    flex-direction: row;
+  }
+  @include respond-to(tablet) {
+    height: 350px;
+  }
+  @include respond-to(descop) {
+    height: 435px;
+  }
 }
+
 .visit {
   width: 100%;
   padding: 3rem;
@@ -112,6 +124,18 @@ export default {
 
   @include respond-to(descop) {
     padding-top: 0;
+  }
+}
+
+.footer__map {
+  height: 300px;
+  flex-grow: 1;
+  background: url("~@/assets/images/map.jpg");
+  background-size: cover;
+  background-position: center;
+
+  @include respond-to(not-phone) {
+    height: 100%;
   }
 }
 </style>

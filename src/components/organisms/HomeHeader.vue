@@ -75,7 +75,7 @@ export default {
       left: 10px;
       top: -12px;
       width: 3px;
-      height: 200px;
+      height: 225px;
       background: $pulsar-green;
       background: $pulsar-gradient-ufo;
       transform: rotate(9deg);
@@ -87,7 +87,7 @@ export default {
 
       &:before {
         left: 5px;
-        height: 275px;
+        height: 290px;
         transform: rotate(9deg);
       }
     }
@@ -101,7 +101,7 @@ export default {
         width: 5px;
         top: -20px;
         left: -5px;
-        height: 355px;
+        height: 375px;
         transform: rotate(9deg);
       }
     }
@@ -110,7 +110,7 @@ export default {
   .bestiaparda__season {
     margin: 0;
     margin-bottom: .25rem;
-    padding-left: 1.7rem;
+    padding-left: 1.65rem;
     color: $pulsar-green;
     font-family: $chromo;
     font-style: oblique;
@@ -118,10 +118,12 @@ export default {
     @include same-font-and-height(.8rem);
 
     @include respond-to(tablet) {
+      padding-left: 2.3rem;
       @include same-font-and-height(.9rem);
     }
 
     @include respond-to(descop) {
+      padding-left: 2.8rem;
       @include same-font-and-height(1rem);
     }
   }
@@ -136,32 +138,36 @@ export default {
   }
 
   .bestiaparda__hash {
-    padding-left: 1.35rem;
+    padding-left: 1.4rem;
     @include same-font-and-height(1.25rem);
 
     @include respond-to(tablet) {
+      padding-left: 1.85rem;
       @include same-font-and-height(2rem);
     }
 
     @include respond-to(descop) {
+      padding-left: 2.45rem;
       @include same-font-and-height(2.5rem);
     }
   }
 
   .bestiaparda__text {
-    margin-bottom: 1.5rem;
+    margin: .5rem 0 1.5rem;
     padding-left: .5rem;
     font-weight: 900;
     @include same-font-and-height(3rem);
-    text-indent: 7px;
+    text-indent: 8px;
 
     @include respond-to(tablet) {
       @include same-font-and-height(4.5rem);
+      text-indent: 13px;
     }
 
     @include respond-to(descop) {
       margin-bottom: 2rem;
       @include same-font-and-height(6rem);
+      text-indent: 18px;
     }
   }
 
