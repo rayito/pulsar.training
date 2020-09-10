@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <HomeHeader class="home__section" />
+    <HomeHeader class="home__section home__header" />
     <HomeWelcome class="home__section home__section--side-section" />
     <HomeClasses class="home__section" />
     <HomePro class="home__section" />
@@ -45,6 +45,9 @@ export default {
   }
 
   .home__section--side-section {
+    @include respond-to(tablet) {
+      margin-bottom: 2rem;
+    }
     @include respond-to(descop) {
       margin-bottom: 10rem;
     }
