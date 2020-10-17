@@ -1,12 +1,12 @@
 <template>
-  <div class="home">
+  <main class="home">
     <HomeHeader class="home__section home__header" />
     <HomeWelcome class="home__section home__section--side-section" />
     <HomeClasses class="home__section" />
     <HomePro class="home__section" />
     <HomeNutrition class="home__section home__section--side-section" />
     <HomeFooter class="home__section" />
-  </div>
+  </main>
 </template>
 
 <script>

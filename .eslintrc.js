@@ -19,5 +19,7 @@ module.exports = {
     'no-trailing-spaces': 'off',
     'no-unused-vars': 'off',
     'object-shorthand': 'off',
+    'linebreak-style': 'off',
+    'max-len': 'off',
   },
 };
