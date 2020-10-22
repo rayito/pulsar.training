@@ -175,6 +175,7 @@ export default {
 
   .pricing__content {
     padding: 0 1rem;
+    margin: 0 auto;
     max-width: 1200px;
 
     @include respond-to(tablet) {
