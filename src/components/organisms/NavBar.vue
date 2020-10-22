@@ -9,7 +9,7 @@
 
     <div class="clickable-area" 
          @click="toggleMenu"
-         v-if="windowWidth < 426">
+         v-if="windowWidth <= 610">
       <div class="burger-icon" 
            :class="{ 'burger-icon--open': isMenuOpen }">
         <span class="stick"></span>
@@ -134,7 +134,7 @@ header {
     box-shadow: 0 -1px 5px 0px $pulsar-black;
   }
 
-  @include respond-to(not-phone) {
+  @include respond-to(not-phablet) {
     grid-template-areas: 
     "logo navbar contact";
   }
@@ -160,7 +160,7 @@ header {
   display: flex;
 
   img {
-    @include respond-to(tablet) {
+    @include respond-to(phablet) {
       height: 28px;
     }
 
@@ -219,7 +219,7 @@ header {
     }
   }
 
-  @include respond-to(phone) {
+  @include respond-to(phablet) {
     position: absolute;
     z-index: 1000;
     overflow: hidden;
@@ -303,7 +303,7 @@ header {
   height: 100%;
   display: flex;
   align-items: center;
-}
+} 
 
 .burger-icon--open{
   height: 16px;

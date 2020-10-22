@@ -51,8 +51,8 @@ export default {
       opacity: 0.75;
     }
 
-    @include respond-to(tablet) {
-      height: 390px;
+    @include respond-to(not-phone) {
+      height: 400px;
     }
 
     @include respond-to(descop) {
@@ -81,7 +81,7 @@ export default {
       transform: rotate(9deg);
     }
 
-    @include respond-to(tablet) {
+    @include respond-to(not-phone) {
       max-width: 415px;
       left: 2rem;
 
@@ -117,7 +117,7 @@ export default {
     font-weight: 900;
     @include same-font-and-height(.8rem);
 
-    @include respond-to(tablet) {
+    @include respond-to(not-phone) {
       padding-left: 2.3rem;
       @include same-font-and-height(.9rem);
     }
@@ -141,7 +141,7 @@ export default {
     padding-left: 1.4rem;
     @include same-font-and-height(1.25rem);
 
-    @include respond-to(tablet) {
+    @include respond-to(not-phone) {
       padding-left: 1.85rem;
       @include same-font-and-height(2rem);
     }
@@ -159,7 +159,7 @@ export default {
     @include same-font-and-height(3rem);
     text-indent: 8px;
 
-    @include respond-to(tablet) {
+    @include respond-to(not-phone) {
       @include same-font-and-height(4.5rem);
       text-indent: 13px;
     }

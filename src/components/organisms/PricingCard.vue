@@ -1,17 +1,26 @@
 <template>
   <section class="pricing-card">
-    <h1 class="pricing-card__title">{{ pricingName }}</h1>
-    <div class="pricing-card__description">
-      {{ pricingDescription }}
+    <div class="pricing-card__header">
+      <h1 class="pricing-card__title">{{ pricingName }}</h1>
+      <div class="pricing-card__description">
+        {{ pricingDescription }}
+      </div>
     </div>
-    <div class="pricing-card__details">
-      <div class="details__item details__month">
+    <div :class="{
+      'pricing-card__details': pricingMonth, 
+      'pricing-card__details--session': pricingSession
+    }">
+      <div v-if="pricingMonth" class="details__item details__month">
         <div class="details__amount">{{ pricingMonth }}</div>
         <div class="details__period">€/ MES</div>
       </div>
       <div v-if="pricingTrim" class="details__item details__trimester">
         <div class="details__amount">{{ pricingTrim }}</div>
         <div class="details__period">€/ TRIM.</div>
+      </div>
+      <div v-if="pricingSession" class="details__item details__session">
+        <div class="details__amount">{{ pricingSession }}</div>
+        <div class="details__period">€</div>
       </div>
       <div class="details__description">
         {{ pricingDetails }}
@@ -28,6 +37,7 @@ export default {
     'pricing-description', 
     'pricing-month',
     'pricing-trim',
+    'pricing-session',
     'pricing-details',
   ],
 };
@@ -37,6 +47,7 @@ export default {
 .pricing-card {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   border: solid 1px $pulsar-green;
   border-top-width: 4px;
   color: white;
@@ -51,10 +62,6 @@ export default {
   font-weight: 900;
   color: white;
   text-transform: uppercase;
-
-  @include respond-to(descop) {
-    font-size: 2.5rem;
-  }
 }
 
 .pricing-card__description {
@@ -65,17 +72,28 @@ export default {
   color: rgba(255,255,255,.75);
 }
 
-.pricing-card__details {
+.pricing-card__details,
+.pricing-card__details--session {
   align-self: flex-end;
+  padding: .5rem 0 0 1.5rem;
+  background: linear-gradient(313.36deg, rgba(91, 184, 137, 0.5) 0%, rgba(91, 184, 137, 0.1) 96.9%);
+  clip-path: polygon(7% 0%, 100% 0, 100% 100%, 0% 100%);
+}
+
+.pricing-card__details {
   display: grid;
   grid-template-areas: 
     "month trim"
     "accu  accu";
   grid-template-columns: 1fr auto;
   align-items: center;
-  padding: .5rem 0 0 2rem;
-  background: linear-gradient(313.36deg, rgba(91, 184, 137, 0.5) 0%, rgba(91, 184, 137, 0.1) 96.9%);
-  clip-path: polygon(7% 0%, 100% 0, 100% 100%, 0% 100%);
+}
+
+.pricing-card__details--session {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 170px;
 }
 
 .details__month {
