@@ -6,7 +6,7 @@
     <div class="pricing__content">
       <h2 class="section__title">CUOTAS MENSUALES</h2>
       <p class="section__subtitle">
-        Obtén el mejor precio por clase, comprométete a un mes de entrenamiento y tanto si eres nuevo, como si tienes más experiencia, tenemos una tarifa para ti.
+        Obtén el mejor precio por clase accediendo a un mes de entrenamiento. Tanto si eres nuevo como si tienes más experiencia, tenemos una tarifa para ti.
       </p>
       <div class="section__grid">
         <PricingCard 
@@ -22,7 +22,7 @@
 
       <h2 class="section__title">PAGO POR SESIÓN</h2>
       <p class="section__subtitle">
-        Flexibilidad al máximo. Disfruta de Púlsar sin necesidad del compromiso mensual. Ven a una clase suelta o compra un bono para venir con mayor frecuencia.      
+        Flexibilidad al máximo. Disfruta de Pūlsar sin compromiso mensual. Ven a una clase suelta o compra un bono para venir con mayor frecuencia.      
       </p>
       <div class="section__grid">
         <PricingCard 
@@ -169,6 +169,9 @@ export default {
     }
 
     @include respond-to(descop) {
+      width: 100%;
+      max-width: calc(1200px - 8rem);
+      margin: 0 auto;
       font-size: 5rem;
     }
   }
@@ -196,14 +199,18 @@ export default {
     font-weight: 900;
     color: white;
     text-transform: uppercase;
+    
+    @include respond-to(descop) {
+      font-size: 2rem;
+    }
   }
 
   .section__subtitle {
     margin-left: 1rem;
     margin-bottom: 1.5rem;
     font-family: 'Roboto', sans-serif;
-    font-size: 12px;
-    line-height: 18px;
+    font-size: 14px;
+    line-height: 1.3;
     color: rgba(255,255,255,.75);
 
     @include respond-to(not-phone) {
