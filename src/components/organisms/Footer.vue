@@ -1,10 +1,10 @@
 <template>
-  <section class="footer">
+  <footer class="footer">
     <div class="footer__content">
       <span>© 2020 Púlsar Salud y Deporte, S.L.</span>
       <span>Todos los derechos reservados</span>
     </div>
-  </section>
+  </footer>
 </template>
 
 <script>

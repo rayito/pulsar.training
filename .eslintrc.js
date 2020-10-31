@@ -21,5 +21,6 @@ module.exports = {
     'object-shorthand': 'off',
     'linebreak-style': 'off',
     'max-len': 'off',
+    "import/no-unresolved": 0,
   },
 };

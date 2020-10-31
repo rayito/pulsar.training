@@ -2,8 +2,23 @@
   --primary-color: #5BB89E !important;
 }
 
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  line-height: initial;
+}
+
 ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
+}
+
+.md-toggle-password {
+  svg {
+    fill: rgba(255,255,255,.75);
+  }
 }

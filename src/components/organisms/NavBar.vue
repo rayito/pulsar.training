@@ -25,33 +25,25 @@
           <router-link 
             @click.native="closeMenu" 
             class="header__link" 
-            to="/nuevo-en-pulsar">
-            NUEVO EN PūLSAR
-          </router-link>
+            to="/online">PūLSAR ONLINE</router-link>
         </li>
         <li class="header__item">
           <router-link 
             @click.native="closeMenu" 
             class="header__link" 
-            to="/clases">
-            CLASES
-          </router-link>
+            to="/clases">CLASES</router-link>
         </li>
         <li class="header__item">
           <router-link 
             @click.native="closeMenu" 
             class="header__link" 
-            to="/nutricion">
-            NUTRICIÓN
-          </router-link>
+            to="/nutricion">NUTRICIÓN</router-link>
         </li>
         <li class="header__item">
           <router-link 
             @click.native="closeMenu" 
             class="header__link" 
-            to="/precios">
-            PRECIOS
-          </router-link>
+            to="/precios">PRECIOS</router-link>
         </li>
       </ul>
     </nav>
