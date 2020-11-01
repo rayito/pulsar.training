@@ -31,12 +31,6 @@
           <router-link 
             @click.native="closeMenu" 
             class="header__link" 
-            to="/clases">CLASES</router-link>
-        </li>
-        <li class="header__item">
-          <router-link 
-            @click.native="closeMenu" 
-            class="header__link" 
             to="/nutricion">NUTRICIÓN</router-link>
         </li>
         <li class="header__item">

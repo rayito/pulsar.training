@@ -34,3 +34,21 @@ $tablet: 810px;
     font-size: $font-size;
     line-height: $font-size;
 }
+
+@mixin view-sizing() {
+    padding: 0 1rem;
+    padding-top: calc(56px + .5rem);
+    min-height: calc(100vh - 80px);
+    max-width: 1200px;
+    margin: 0 auto;
+  
+    @include respond-to(not-phone) {
+        padding-left: 2rem;
+        padding-right: 2rem;
+        min-height: calc(100vh - 64px);
+    }
+  
+    @include respond-to(descop) {
+        padding-top: calc(88px + 1.5rem);
+    }
+}

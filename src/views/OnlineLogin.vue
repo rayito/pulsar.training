@@ -15,11 +15,12 @@
       <label class="field-label">Contraseña</label>
       <md-input type="password" class="field-input" v-model="pass"></md-input>
     </md-field>
-    <ActionButton 
-      class="online__access" 
-      button-text="ACCEDER" 
-      button-style="solid"
-    />
+    <div class="field-error" :class="{'showError': isError}">{{ errorMessage }}</div>
+    <div
+      class="button solid online__access" 
+      @click="handleClick">
+      ACCEDER
+    </div>
     <div class="login__new-member">
       <span class="new-member__divider"></span>
       <div class="new-member__text">¿Nuevo en PÚLSAR/ONLINE?</div>
@@ -34,33 +35,81 @@
 </template>
 
 <script>
-import ActionButton from '@/components/atoms/ActionButton.vue';
 import LinkButton from '@/components/atoms/LinkButton.vue';
+import MD5 from 'crypto-js/md5';
+
+const contentful = require('contentful');
 
 export default {
   name: 'OnlineLogin',
   components: {
-    ActionButton,
     LinkButton,
   },
   data() {
     return {
       user: '',
       pass: '',
+      errorMessage: 'Los datos no son correctos',
+      isError: false,
     };
+  },
+  methods: {
+    handleClick() {
+      if (this.user === '' || this.pass === '') {
+        if (this.isError) {
+          this.isError = false;
+          setTimeout(() => {
+            this.isError = true;
+            this.errorMessage = 'Los datos no son correctos';
+          }, 200);
+        } else {
+          this.isError = true;
+          this.errorMessage = 'Los datos no son correctos';
+        }
+      } else {
+        this.isError = false;
+        this.loginAttempt();
+      }
+    },
+    loginAttempt() {
+      const client = contentful.createClient({
+        space: '1cfepwuemnrk',
+        accessToken: 'v13Y_ubATC1c-6Olh2owS6eb5QvE4FyJiqsEw9irkjo',
+      });
+      client.getEntries({
+        content_type: 'user',
+        'fields.userMail': this.user,
+      })
+      .then((response) => { 
+        console.log(response.items);
+        if (response.items && response.items.length > 0) {
+          const user = response.items[0].fields;
+          const pass = user.passwordHash;
+          const enteredPass = `${MD5(this.pass)}`;
+          console.log(`Pass: ${pass}`);
+          console.log(`Login Pass: ${enteredPass}`);
+          if (enteredPass === pass) {
+            this.isError = false;
+            console.log('LOGIN SUCCESS');
+          } else {
+            setTimeout(() => {
+              this.isError = true;
+              this.errorMessage = 'La contraseña no es correcta';
+            }, 200);
+          }
+        } else {
+          //
+        }
+      })
+      .catch(console.error);
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .login {
-  padding: 0 1rem;
-  padding-top: calc(56px + .5rem);
-  min-height: calc(100vh - 80px);
-  
-  @include respond-to(descop) {
-    padding-top: 0;
-  }
+  @include view-sizing;
 
   .login__title {
     margin-top: 0;
@@ -82,6 +131,12 @@ export default {
     display: flex;
     align-items: center;
     padding-bottom: .5rem;
+    margin-left: auto;
+    margin-right: auto;
+    
+    @include respond-to(not-phone) {
+      max-width: 400px;
+    }
 
     &:after {
       background: rgba(255,255,255,.75);
@@ -117,6 +172,34 @@ export default {
     padding-left: 9px;
   }
 
+  .field-error {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    height: 0;
+    padding: 0 1rem;
+    margin: 0 auto;
+    border-radius: 3rem;
+    background: hsl(0 65% 46%);
+    color: white;
+    font-size: 14px;
+    opacity: 0;
+    overflow: hidden;
+    transition: all .2s ease;
+    
+    @include respond-to(not-phone) {
+      max-width: 400px;
+    }
+
+    &.showError {
+      height: 32px;
+      opacity: 1;
+    }
+  }
+
+  @import '~@/components/atoms/button.scss';
+
   .online__access {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
@@ -143,6 +226,10 @@ export default {
     font-size: 12px;
     line-height: 1.5;
     color: rgba(255,255,255,.75);
+
+    @include respond-to(not-phone) {
+      font-size: 14px;
+    }
   }
 }
 </style>
