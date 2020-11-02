@@ -6,14 +6,14 @@
         <path fill-rule="evenodd" clip-rule="evenodd" d="M16 8C16 10.21 14.21 12 12 12C9.79 12 8 10.21 8 8C8 5.79 9.79 4 12 4C14.21 4 16 5.79 16 8ZM4 18C4 15.34 9.33 14 12 14C14.67 14 20 15.34 20 18V20H4V18Z" fill="white" fill-opacity="0.65"/>
       </svg>
       <label class="field-label">Correo electrónico</label>
-      <md-input class="field-input" v-model="user"></md-input>
+      <md-input @keyup.enter="handleClick" class="field-input" v-model="user"></md-input>
     </md-field>
     <md-field>
       <svg class="field-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M17 8H18C19.1 8 20 8.9 20 10V20C20 21.1 19.1 22 18 22H6C4.9 22 4 21.1 4 20V10C4 8.9 4.9 8 6 8H7V6C7 3.24 9.24 1 12 1C14.76 1 17 3.24 17 6V8ZM12 3C10.34 3 9 4.34 9 6V8H15V6C15 4.34 13.66 3 12 3ZM6 20V10H18V20H6ZM14 15C14 16.1 13.1 17 12 17C10.9 17 10 16.1 10 15C10 13.9 10.9 13 12 13C13.1 13 14 13.9 14 15Z" fill="white" fill-opacity="0.65"/>
       </svg>
       <label class="field-label">Contraseña</label>
-      <md-input type="password" class="field-input" v-model="pass"></md-input>
+      <md-input @keyup.enter="handleClick" type="password" class="field-input" v-model="pass"></md-input>
     </md-field>
     <div class="field-error" :class="{'showError': isError}">{{ errorMessage }}</div>
     <div
@@ -37,6 +37,7 @@
 <script>
 import LinkButton from '@/components/atoms/LinkButton.vue';
 import MD5 from 'crypto-js/md5';
+import userLog from '@/services/userLog';
 
 const contentful = require('contentful');
 
@@ -60,11 +61,11 @@ export default {
           this.isError = false;
           setTimeout(() => {
             this.isError = true;
-            this.errorMessage = 'Los datos no son correctos';
+            this.errorMessage = 'Por favor, rellena tu correo y contraseña';
           }, 200);
         } else {
           this.isError = true;
-          this.errorMessage = 'Los datos no son correctos';
+          this.errorMessage = 'Por favor, rellena tu correo y contraseña';
         }
       } else {
         this.isError = false;
@@ -91,6 +92,8 @@ export default {
           if (enteredPass === pass) {
             this.isError = false;
             console.log('LOGIN SUCCESS');
+            userLog.login(JSON.stringify(user));
+            this.$router.replace('/pulsar-online');
           } else {
             setTimeout(() => {
               this.isError = true;
@@ -98,7 +101,11 @@ export default {
             }, 200);
           }
         } else {
-          //
+          this.isError = false;
+          setTimeout(() => {
+            this.isError = true;
+            this.errorMessage = 'El usuario no existe';
+          }, 200);
         }
       })
       .catch(console.error);

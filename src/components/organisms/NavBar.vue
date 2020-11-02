@@ -195,7 +195,7 @@ header {
       transition: width ease-in-out .3s;
     }
 
-    &.router-link-exact-active {
+    &.router-link-active {
       font-weight: 500;
       color: $pulsar-green;
 

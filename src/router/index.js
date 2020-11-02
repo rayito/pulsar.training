@@ -1,10 +1,12 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import userLog from '@/services/userLog';
 import Home from '../views/Home.vue';
 import Pricing from '../views/Pricing.vue';
-import PulsarOnline from '../views/PulsarOnline.vue';
+import OnlinePreview from '../views/OnlinePreview.vue';
 import OnlineLogin from '../views/OnlineLogin.vue';
 import RequestAccount from '../views/RequestAccount.vue';
+import PulsarOnline from '../views/PulsarOnline.vue';
 
 Vue.use(VueRouter);
 
@@ -22,17 +24,22 @@ const routes = [
   {
     path: '/online',
     name: 'Pūlsar Online',
-    component: PulsarOnline,
+    component: OnlinePreview,
   },
   {
-    path: '/online-login',
+    path: '/online/login',
     name: 'Pūlsar Online Login',
     component: OnlineLogin,
   },
   {
-    path: '/nueva-cuenta',
+    path: '/online/nueva-cuenta',
     name: 'Pūlsar Online - Nueva Cuenta',
     component: RequestAccount,
+  },
+  {
+    path: '/pulsar-online',
+    name: 'Pūlsar Online',
+    component: PulsarOnline,
   },
   {
     path: '/building',
@@ -44,6 +51,14 @@ const routes = [
 const router = new VueRouter({
   mode: 'history',
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.path === '/pulsar-online' && !userLog.checkLogin()) {
+    next({ path: '/online/login' });
+  } else {
+    next();
+  } 
 });
 
 export default router;
