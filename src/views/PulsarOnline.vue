@@ -2,6 +2,7 @@
   <main class="online">
     <h1 class="online__title">PūLSAR/ONLINE</h1>
     <p class="online__p">Hola {{ userName }}</p>
+    <a @click="logout" href="" class="logout button solid online__access">LOGOUT</a>
   </main>
 </template>
 
@@ -13,12 +14,18 @@ export default {
   computed: {
     userName: () => JSON.parse(userLog.getUser()).userName,
   },
+  methods: {
+    logout: () => {
+      userLog.logout();
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .online {
   @include view-sizing;
+  @import '~@/components/atoms/button.scss';
 
   .online__title {
     margin-top: 0;
