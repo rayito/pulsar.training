@@ -1,16 +1,46 @@
 <template>
   <main class="online">
-    <h1 class="online__title">PūLSAR/ONLINE</h1>
-    <p class="online__p">Hola {{ userName }}</p>
+    <div class="online__header">
+      <div class="online__date">
+        <span class="online__date-day">{{ dateDay }}</span>
+        <span class="online__date-month">{{ dateMonth }}</span>
+      </div>
+      <div class="online__welcome">Hola, {{ userName }}!</div>
+      <div class="online__link">EN DIRECTO A LAS 18:00</div>
+    </div>
+    <iframe class="online__video" src="https://www.youtube.com/embed/U1jRSwqGxcE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     <a @click="logout" href="" class="logout button solid online__access">LOGOUT</a>
   </main>
 </template>
 
 <script>
 import userLog from '@/services/userLog';
+import utils from '@/utils/utils';
+
+const MONTHS = [
+  'Enero',
+  'Febrero',
+  'Marzo',
+  'Abril',
+  'Mayo',
+  'Junio',
+  'Julio',
+  'Agosto',
+  'Septiembre',
+  'Octubre',
+  'Noviembre',
+  'Diciembre',
+];
 
 export default {
   name: 'PulsarOnline',
+  data() {
+    return {
+      date: new Date(),
+      dateDay: '',
+      dateMonth: '',
+    };
+  },
   computed: {
     userName: () => JSON.parse(userLog.getUser()).userName,
   },
@@ -19,90 +49,79 @@ export default {
       userLog.logout();
     },
   },
+  created() {
+    this.dateDay = utils.leadZeros(this.date.getDate());
+    this.dateMonth = MONTHS[this.date.getMonth()];
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .online {
-  @include view-sizing;
   @import '~@/components/atoms/button.scss';
 
-  .online__title {
-    margin-top: 0;
-    margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: calc(56px + .5rem);
+  min-height: calc(100vh - 80px);
+  max-width: 1000px;
+  margin: 0 auto;
+
+  @include respond-to(not-phone) {
+    min-height: calc(100vh - 64px);
+  }
+
+  @include respond-to(descop) {
+    padding-top: calc(88px + 1.5rem);
+  }
+
+  .online__header {
+    display: grid;
+    grid-template-areas: 
+      "date welcome"
+      "date online";
+    width: 100%;
+    max-width: 600px;
+    padding: 1rem;
+    padding-top: 0;
+    color: white;
     font-family: $chromo;
     font-style: oblique;
-    font-size: 3rem;
-    font-weight: 900;
-    color: white;
-    text-transform: uppercase;
-    text-align: center;
-
-    @supports (-webkit-text-stroke: 1px white) {
-      -webkit-text-stroke: 1px white;
-      -webkit-text-fill-color: transparent;
-    }
   }
 
-  .online__content {
-    @include respond-to(not-phone) {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 0 1.5rem;
-    }
-  }
-
-  .online__p,
-  .online__section {
-    margin-left: auto;
-    margin-right: auto;
-    
-    @include respond-to(not-phone) {
-      max-width: 332px;
-    }
-  }
-
-  p {
-    margin-bottom: .5rem;
-    font-family: 'Roboto', sans-serif;
-    font-size: 12px;
-    line-height: 1.5;
-    color: rgba(255,255,255,.75);
-  }
-
-  .online__access {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-    margin: 1rem auto;
-  }
-
-  .section__title,
-  .section__subtitle {
-    font-family: $chromo;
-    font-style: oblique;
-    font-weight: 900;
-    color: white;
-    text-transform: uppercase;
+  .online__date {
+    grid-area: date;
+    display: flex;
+    flex-direction: column;
+    font-weight: 800;
     line-height: 1;
+    color: white;
+
+    .online__date-day {
+      font-size: 3rem;
+    }
+
+    .online__date-month {
+      text-transform: uppercase;
+      font-weight: 500;
+    }
   }
 
-  .section__title {
-    margin: 0;
-    margin-bottom: .75rem;
-    padding-top: 1.5rem;
-    font-size: 1.5rem;
+  .online__welcome {
+    grid-area: welcome;
   }
 
-  .section__subtitle {
-    margin: 0;
-    padding-left: 1rem;
-    margin-bottom: .25rem;
-    font-size: 1rem;
+  .online__link {
+    grid-area: online;
   }
 
-  .section__p {
-    padding-left: 1rem;
-    margin: 0;
+  .online__video {
+    width: 100vw;
+    max-width: 600px;
+    height: 60vw;
+    max-height: 360px;
+    margin: 0 auto;
     margin-bottom: 1rem;
   }
 }

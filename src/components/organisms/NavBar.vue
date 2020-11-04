@@ -2,14 +2,18 @@
   <header class="header" :class="{scrolled: scrolled}">
     <router-link 
       @click.native="closeMenu" 
-      to="/" class="header__logo">
+      to="/" 
+      class="header__logo"
+      :class="{ 'header__logo--online': pathOnline }">
       <img v-if="windowWidth < 768" src="@/assets/images/LogoPulsarAnagramaBlanco.svg">
       <img v-else src="@/assets/images/LogoPulsar.svg">
     </router-link>
+    
+    <h1 v-if="pathOnline" class="header__online-title">PūLSAR/ONLINE</h1>
 
     <div class="clickable-area" 
          @click="toggleMenu"
-         v-if="windowWidth <= 610">
+         v-if="windowWidth <= 610 && !pathOnline">
       <div class="burger-icon" 
            :class="{ 'burger-icon--open': isMenuOpen }">
         <span class="stick"></span>
@@ -18,7 +22,8 @@
       </div>
     </div>
   
-    <nav class="header__navbar"
+    <nav v-if="!pathOnline"
+         class="header__navbar"
          :class="{ 'header__navbar--open': isMenuOpen }" >
       <ul>
         <li class="header__item">
@@ -41,7 +46,11 @@
         </li>
       </ul>
     </nav>
+    <a v-if="pathOnline" @click="logout" href="" class="header__logout">
+      <img src="@/assets/images/icon-logout.svg" />
+    </a>
     <ActionButton 
+      v-else
       class="reserve" 
       button-text="RESERVAR PRUEBA GRATIS" 
     />
@@ -50,6 +59,7 @@
 
 <script>
 import ActionButton from '@/components/atoms/ActionButton.vue';
+import userLog from '@/services/userLog';
 
 export default {
   name: 'NavBar',
@@ -66,6 +76,7 @@ export default {
   },
   mounted() {
     window.addEventListener('scroll', this.handleScroll);
+    console.log(this.$route);
 
     window.onresize = () => {
       this.windowWidth = window.innerWidth;
@@ -93,6 +104,14 @@ export default {
     closeMenu: function () {
       this.isMenuOpen = false;
     },
+    logout: () => {
+      userLog.logout();
+    },
+  },
+  computed: {
+    pathOnline: function () {
+      return this.$route.fullPath === '/pulsar-online';
+    },
   },
 };
 </script>
@@ -107,7 +126,7 @@ header {
   display: grid;
   gap: 1rem;
   grid-template-areas: 
-    "navbar logo contact";
+    "start mid end";
   grid-template-columns: auto 1fr auto;
   align-items: center;
   height: 56px;
@@ -118,11 +137,6 @@ header {
   
   &.scrolled {
     box-shadow: 0 -1px 5px 0px $pulsar-black;
-  }
-
-  @include respond-to(not-phablet) {
-    grid-template-areas: 
-    "logo navbar contact";
   }
 
   @include respond-to(tablet) {
@@ -142,8 +156,12 @@ header {
 }
 
 .header__logo {
-  grid-area: logo;
+  grid-area: mid;
   display: flex;
+
+  @include respond-to(not-phablet) {
+    grid-area: start;
+  }
 
   img {
     @include respond-to(phablet) {
@@ -154,9 +172,45 @@ header {
       height: 38px;
     }
   }
+
+  &.header__logo--online {
+    grid-area: start;
+    margin-left: .5rem;
+
+    @include respond-to(not-phablet) {
+      margin: 0;
+    }
+  }
+}
+
+.header__online-title {
+  grid-area: mid;
+  margin: 0;
+  font-family: $chromo;
+  font-style: oblique;
+  font-size: 2rem;
+  line-height: 1;
+  font-weight: 900;
+  color: white;
+  text-transform: uppercase;
+  text-align: center;
+
+  @supports (-webkit-text-stroke: 1px white) {
+    -webkit-text-stroke: 1px white;
+    -webkit-text-fill-color: transparent;
+  }
+
+  @include respond-to(not-phablet) {
+    grid-area: none;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
 
 .header__navbar {
+  grid-area: mid;
+
   ul {
     display: flex;
     justify-content: center;
@@ -254,7 +308,7 @@ header {
   }
 
   @include respond-to(tablet) {
-    grid-area: navbar;
+    grid-area: mid;
 
     ul {
       flex-direction: row;
@@ -263,11 +317,10 @@ header {
 }
 
 .reserve {
-  grid-area: contact;
+  grid-area: end;
 }
 
 .burger-icon {
-  grid-area: navbar;
   display: inline-flex;
   flex-direction: column;
   justify-content: space-between;
@@ -286,6 +339,7 @@ header {
 }
 
 .clickable-area {
+  grid-area: start;
   height: 100%;
   display: flex;
   align-items: center;
@@ -307,5 +361,15 @@ header {
     transform: rotate(41deg) scaleX(1.2);
     transform-origin: right;
   }
+}
+
+.header__logout {
+  grid-area: end;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
 </style>
