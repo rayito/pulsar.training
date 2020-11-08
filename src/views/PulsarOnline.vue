@@ -8,7 +8,7 @@
       <div class="online__welcome">Hola, {{ userName }}!</div>
       <div class="online__link">EN DIRECTO A LAS 18:00</div>
     </div>
-    <iframe class="online__video" src="https://www.youtube.com/embed/U1jRSwqGxcE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <iframe class="online__video" src="https://www.youtube.com/embed/U1jRSwqGxcE?modestbranding=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" modestbranding="1" allowfullscreen></iframe>
     <a @click="logout" href="" class="logout button solid online__access">LOGOUT</a>
   </main>
 </template>
@@ -42,7 +42,7 @@ export default {
     };
   },
   computed: {
-    userName: () => JSON.parse(userLog.getUser()).userName,
+    userName: () => userLog.getUserName(),
   },
   methods: {
     logout: () => {
