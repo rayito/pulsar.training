@@ -89,17 +89,12 @@ export default {
         'fields.userMail': this.user,
       }))
       .then((entries) => { 
-        console.log(entries.items);
         if (entries.items && entries.items.length > 0) {
-          console.log(entries);
           const user = entries.items[0].fields;
           const pass = user.passwordHash['en-US'];
           const enteredPass = `${MD5(this.pass)}`;
-          console.log(`Pass: ${pass}`);
-          console.log(`Login Pass: ${enteredPass}`);
           if (enteredPass === pass) {
             this.isError = false;
-            console.log('LOGIN SUCCESS');
             userLog.login({
               user: user.userMail['en-US'],
               userName: user.userName['en-US'],

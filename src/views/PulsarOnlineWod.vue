@@ -62,7 +62,6 @@ export default {
         'fields.date': this.$route.params.date,
       }))
       .then((entries) => {
-        console.log(entries);
         if (entries.items.length > 0 && entries.items[0].fields.wodDetails ) {
           this.wodDetails = entries.items[0].fields.wodDetails['en-US'];
         }

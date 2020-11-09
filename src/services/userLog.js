@@ -31,11 +31,7 @@ const checkLogin = async () => {
     return client.getSpace('1cfepwuemnrk')
       .then((space) => space.getEnvironment('master'))
       .then((env) => env.getEntry(psDec(user[psEnc('id')])))
-      .then((entry) => {
-        console.log(user);
-        console.log(`ID CHECK: ${entry.sys.id} === ${psDec(user[psEnc('id')])}`);
-        return entry.sys.id === psDec(user[psEnc('id')]);
-      });
+      .then((entry) => entry.sys.id === psDec(user[psEnc('id')]));
   } else {
     return false;
   }

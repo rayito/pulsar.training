@@ -119,7 +119,6 @@ export default {
       });
 
       const id = userLog.getUserID();
-      console.log(`ID: ${id}`);
 
       client.getSpace('1cfepwuemnrk')
       .then((space) => space.getEnvironment('master'))
