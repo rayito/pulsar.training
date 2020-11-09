@@ -33,7 +33,7 @@ export default {
   },
   data() {
     return {
-      whatsappLink: 'http://api.whatsapp.com/send?phone=+34660228866&text="Hola!"',
+      whatsappLink: 'http://api.whatsapp.com/send?phone=+34623030862&text="Hola!"',
       buttonIcon: whatsappSVG,
       mailIcon: mailSVG,
       width: 0,
