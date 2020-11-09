@@ -47,7 +47,7 @@ export default {
   @include view-sizing;
 
   .request-account__title {
-    margin-top: 0;
+    margin-top: 1rem;
     margin-bottom: 1rem;
     font-family: $chromo;
     font-style: oblique;

@@ -134,7 +134,7 @@ export default {
   @include view-sizing;
 
   .login__title {
-    margin-top: 0;
+    margin-top: 1rem;
     font-family: $chromo;
     font-style: oblique;
     font-size: 3rem;
