@@ -1,37 +1,60 @@
+import { createClient } from 'contentful-management';
+
+const client = createClient({
+  accessToken: 'CFPAT--Gy7PqjHFkN-kbitWa0m2Q8edHZbu8HbN2tW6JDe828',
+});
+
 const st = window.localStorage;
-const s2b = (str) => btoa(btoa(str));
-const b2s = (str) => atob(atob(str));
+const psEnc = (str) => btoa(btoa(str)).replace('=', '?').replace(':', '_');
+const psDec = (str) => atob(atob(str.replace('_', ':').replace('?', '=')));
+
+/*
+const psEnc = (str) => str;
+const psDec = (str) => str;
+*/
 
 const login = (user) => {
   const obUser = {};
-  Object.entries(JSON.parse(user)).forEach(([key, value]) => {
-    obUser[s2b(key)] = s2b(value);
+  Object.entries(user).forEach(([key, value]) => {
+    obUser[psEnc(key)] = psEnc(value);
   });
-  st.setItem(s2b('pulsarLogin'), JSON.stringify(obUser));
+  st.setItem(psEnc('pulsarLogin'), psEnc(JSON.stringify(obUser)));
 };
 
 const logout = () => {
-  st.removeItem(s2b('pulsarLogin'));
+  st.removeItem(psEnc('pulsarLogin'));
 };
 
-const checkLogin = () => st.getItem(s2b('pulsarLogin')) !== null;
+const checkLogin = async () => {
+  if (st.getItem(psEnc('pulsarLogin')) !== null) {
+    const user = JSON.parse( psDec(st.getItem(psEnc('pulsarLogin'))) );
+    return client.getSpace('1cfepwuemnrk')
+      .then((space) => space.getEnvironment('master'))
+      .then((env) => env.getEntry(psDec(user[psEnc('id')])))
+      .then((entry) => {
+        console.log(user);
+        console.log(`ID CHECK: ${entry.sys.id} === ${psDec(user[psEnc('id')])}`);
+        return entry.sys.id === psDec(user[psEnc('id')]);
+      });
+  } else {
+    return false;
+  }
+};
 
-const getUser = () => st.getItem(s2b('pulsarLogin'));
+const getUser = () => st.getItem(psEnc('pulsarLogin'));
 
 const getUserName = () => {
-  const user = JSON.parse( st.getItem(s2b('pulsarLogin')) );
-  return b2s(user[s2b('userName')]);
+  const user = JSON.parse( psDec(st.getItem(psEnc('pulsarLogin'))));
+  return user[psEnc('userName')];
+};
+
+const getUserID = () => {
+  const user = JSON.parse( psDec(st.getItem(psEnc('pulsarLogin'))));
+  return psDec(user[psEnc('id')]);
 };
 
 const userLog = {
-  login, logout, checkLogin, getUser, getUserName,
-};
-
-const obscureString = (str) => str.replace(':', '_');
-const unObscureString = (str) => str.replace('_', ':');
-
-const equalObscure = (str) => {
-  const mid = str.replace('=', '?');
+  login, logout, checkLogin, getUser, getUserName, getUserID,
 };
 
 export default userLog;
