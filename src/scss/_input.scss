@@ -1,0 +1,87 @@
+.ps-field {
+  padding-top: .25rem;
+  margin-left: auto;
+  margin-right: auto;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 8px 8px 0px 0px;
+
+  @include respond-to(not-phone) {
+    max-width: 400px;
+  }
+}
+
+.md-field {
+  display: flex;
+  align-items: center;
+  padding-bottom: .5rem;
+
+  &:after {
+    background: rgba(255,255,255,.75);
+  }
+  &:before {
+    background: rgba(255,255,255,1);
+  }
+}
+
+.field-icon {
+  margin-left: 12px;
+
+  path {
+    transition: fill-opacity .2s ease;
+  }
+}
+
+.md-focused {
+  .field-icon path {
+    fill-opacity: 1;
+  }
+}
+
+.field-label {
+  margin-left: 2.75rem;
+  font-family: 'Roboto', sans-serif;
+  color: rgba(255,255,255,.75);
+  letter-spacing: 0.02rem;
+}
+
+.md-input.field-input {
+  color: rgba(255,255,255,1);
+  padding-left: 9px;
+}
+
+
+
+.md-field.md-has-password {
+  .field-input {
+    padding-right: 2.5rem;
+  }
+  .md-button.md-toggle-password {
+    margin-right: 12px;
+  }
+}
+
+.field-error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  height: 0;
+  padding: 0 1rem;
+  margin: 0 auto;
+  border-radius: 3rem;
+  background: hsl(0 65% 46%);
+  color: white;
+  font-size: 14px;
+  opacity: 0;
+  overflow: hidden;
+  transition: all .2s ease;
+  
+  @include respond-to(not-phone) {
+    max-width: 400px;
+  }
+
+  &.showError {
+    height: 32px;
+    opacity: 1;
+  }
+}

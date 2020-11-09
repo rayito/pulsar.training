@@ -46,37 +46,32 @@
         </li>
       </ul>
     </nav>
-    <a v-if="pathOnline" @click="logout" href="" class="header__logout">
-      <img src="@/assets/images/icon-logout.svg" />
+    <a v-if="pathOnline" @click="openMenu = !openMenu" class="header__online-menu">
+      <img src="@/assets/images/more_vert.svg" />
+      <div class="online-menu__layer" :class="{'online-menu__layer--open': openMenu}">
+        <a @click="changePass" class="online-menu__item">Cambiar contraseña</a>
+        <a @click="logout" class="online-menu__item">Cerrar sesión</a>
+      </div>
     </a>
-    <ActionButton 
-      v-else
-      class="reserve" 
-      button-text="RESERVAR PRUEBA GRATIS" 
-    />
   </header>
 </template>
 
 <script>
-import ActionButton from '@/components/atoms/ActionButton.vue';
 import userLog from '@/services/userLog';
 
 export default {
   name: 'NavBar',
-  components: {
-    ActionButton,
-  },
   data() {
     return {
       windowWidth: window.innerWidth,
       isMenuOpen: false,
       scrollTop: window.pageYOffset,
       scrolled: false,
+      openMenu: false,
     };
   },
   mounted() {
     window.addEventListener('scroll', this.handleScroll);
-    console.log(this.$route);
 
     window.onresize = () => {
       this.windowWidth = window.innerWidth;
@@ -104,13 +99,17 @@ export default {
     closeMenu: function () {
       this.isMenuOpen = false;
     },
-    logout: () => {
+    changePass: function () {
+      this.$router.push('/pulsar-online/cambiar-contraseña');
+    },
+    logout: function () {
       userLog.logout();
+      this.$router.replace('/online/login');
     },
   },
   computed: {
     pathOnline: function () {
-      return this.$route.fullPath === '/pulsar-online';
+      return this.$route.fullPath.includes('/pulsar-online');
     },
   },
 };
@@ -209,7 +208,9 @@ header {
 }
 
 .header__navbar {
-  grid-area: mid;
+  @include respond-to(not-phablet) {
+    grid-area: mid;
+  }
 
   ul {
     display: flex;
@@ -363,7 +364,8 @@ header {
   }
 }
 
-.header__logout {
+.header__online-menu {
+  position: relative;
   grid-area: end;
   width: 2rem;
   height: 2rem;
@@ -371,5 +373,34 @@ header {
   justify-content: center;
   align-items: center;
   cursor: pointer;
+
+  .online-menu__layer {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    height: 0;
+    padding: .5rem 0;
+    background: #1F1F1F;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.5);
+    filter: drop-shadow(0px 2px 6px rgba(0, 0, 0, 0.5));
+    border-radius: 4px;
+    opacity: 0;
+    overflow: hidden;
+    transition: all .2s ease;
+
+    &.online-menu__layer--open {
+      height: 80px;
+      opacity: 1;
+    }
+  }
+
+  .online-menu__item {
+    padding: .5rem 1rem;
+    font-size: 14px;
+    color: white;
+    white-space: nowrap;
+  }
 }
 </style>

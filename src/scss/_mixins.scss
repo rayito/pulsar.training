@@ -37,7 +37,7 @@ $tablet: 810px;
 
 @mixin view-sizing() {
     padding: 0 1rem;
-    padding-top: calc(56px + .5rem);
+    padding-top: calc(56px);
     min-height: calc(100vh - 80px);
     max-width: 1200px;
     margin: 0 auto;
@@ -49,6 +49,21 @@ $tablet: 810px;
     }
   
     @include respond-to(descop) {
-        padding-top: calc(88px + 1.5rem);
+        padding-top: calc(88px);
+    }
+}
+
+@mixin online-title {
+    font-family: $chromo;
+    font-style: oblique;
+    font-size: 2.25rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: $pulsar-green;
+
+    @supports (-webkit-background-clip:text) {
+      background: linear-gradient(135deg, #4E9782 0%, #5BB89E 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 }
