@@ -26,9 +26,7 @@
       <section class="online__section">
         <h1 class="section__title">¿CUÁNTO CUESTA?</h1>
         <p class="section__p">PÚLSAR/ONLINE es una suscripción 15 días de 15€. Ponte en contacto con nosotros y te facilitaremos los datos para realizar el pago.</p>
-      </section>
-      <section class="online__section">
-        <h1 class="section__title">QUIERO ALGO PERSONALIZADO...</h1>
+        <h2 class="section__title">QUIERO ALGO PERSONALIZADO...</h2>
         <p class="section__p">Si quieres una atención más allá del online, ofrecemos clases particulares a domicilio, para más información al respecto, escríbenos por Whatsapp.</p>
       </section>
     </div>
