@@ -54,18 +54,18 @@ const MONTHS = [
 ];
 
 const MESSAGES = [
-  'EN DIRECTO a las 11H', // 0
-  'EN DIRECTO a las 11H', // 1
-  'EN DIRECTO a las 11H', // 2
-  'EN DIRECTO a las 11H', // 3
-  'EN DIRECTO a las 11H', // 4
-  'EN DIRECTO a las 11H', // 5
-  'EN DIRECTO a las 11H', // 6
-  'EN DIRECTO a las 11H', // 7
-  'EN DIRECTO a las 11H', // 8
-  'EN DIRECTO a las 11H', // 9
-  'EN DIRECTO a las 11H', // 10
-  'EN DIRECTO AHORA', // 11
+  'EN DIRECTO a las 10H', // 0
+  'EN DIRECTO a las 10H', // 1
+  'EN DIRECTO a las 10H', // 2
+  'EN DIRECTO a las 10H', // 3
+  'EN DIRECTO a las 10H', // 4
+  'EN DIRECTO a las 10H', // 5
+  'EN DIRECTO a las 10H', // 6
+  'EN DIRECTO a las 10H', // 7
+  'EN DIRECTO a las 10H', // 8
+  'EN DIRECTO a las 10H', // 9
+  'EN DIRECTO AHORA', // 10
+  'EN DIRECTO a las 18H', // 11
   'EN DIRECTO a las 18H', // 12
   'EN DIRECTO a las 18H', // 13
   'EN DIRECTO a las 18H', // 14
@@ -75,9 +75,9 @@ const MESSAGES = [
   'EN DIRECTO AHORA', // 18
   'EN DIRECTO AHORA', // 19
   'EN DIRECTO AHORA', // 20
-  'EN DIRECTO a las 11H', // 21
-  'EN DIRECTO a las 11H', // 22
-  'EN DIRECTO a las 11H', // 23
+  'EN DIRECTO a las 10H', // 21
+  'EN DIRECTO a las 10H', // 22
+  'EN DIRECTO a las 10H', // 23
 ];
 
 export default {
