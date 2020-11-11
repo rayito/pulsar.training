@@ -7,7 +7,7 @@
       class="online__access" 
       button-style="solid"
       button-text="ACCEDER" 
-      link-to="online/login"
+      link-to="/online/login"
     />
     <div class="online__content">
       <section class="online__section">
