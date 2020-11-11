@@ -2,6 +2,9 @@
   <main class="online-wod">
     <h1 class="online-wod__title">{{ titleDate }}</h1>
     <div v-html="wodDetails" class="online-wod__description"></div>
+    <div v-if="!isToday" class="online__video-wrap">
+      <iframe class="online__video" :src="wodVideoLink" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" modestbranding="1" allowfullscreen></iframe>
+    </div>
     <LinkButton 
       class="change-pass__control-button" 
       button-text="VOLVER" 
@@ -41,7 +44,14 @@ export default {
       searchDate: '',
       titleDate: '',
       wodDetails: '',
+      wodVideo: '',
+      isToday: true,
     };
+  },
+  computed: {
+    wodVideoLink: function () { 
+      return `https://www.youtube.com/embed/${this.wodVideo}?modestbranding=1`;
+    },
   },
   methods: {
     getTitleDate: function () {
@@ -62,14 +72,19 @@ export default {
         'fields.date': this.$route.params.date,
       }))
       .then((entries) => {
-        if (entries.items.length > 0 && entries.items[0].fields.wodDetails ) {
+        if (entries.items.length > 0) {
           this.wodDetails = entries.items[0].fields.wodDetails['en-US'];
+          this.wodVideo = entries.items[0].fields.wodVideo['en-US'];
         }
       });
     },
   },
   created() {
     this.date = utils.parseDate(this.$route.params.date);
+    const d = new Date();
+    this.isToday = this.date.getDate() === d.getDate() 
+      && this.date.getMonth() === d.getMonth() 
+      && this.date.getFullYear() === d.getFullYear();
     this.getTitleDate();
     this.searchDate = this.$route.params.date;
     this.getWodDetails();
@@ -107,6 +122,20 @@ export default {
       font-size: 14px;
       color: rgba(255, 255, 255, 0.95);
     }
+  }
+
+  .online__video-wrap {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .online__video {
+    width: 100%;
+    max-width: 600px;
+    height: 60vw;
+    max-height: 360px;
+    margin-bottom: 1rem;
   }
 
   .change-pass__control-button {

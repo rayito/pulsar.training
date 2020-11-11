@@ -27,11 +27,15 @@
         </a>
       </div>
     </div>
+    <PulsarOnlineLastWods 
+      :lastWods="lastWods"
+    />
   </main>
 </template>
 
 <script>
 import LinkButton from '@/components/atoms/LinkButton.vue';
+import PulsarOnlineLastWods from '@/components/organisms/PulsarOnlineLastWods.vue';
 import { createClient } from 'contentful-management';
 import userLog from '@/services/userLog';
 import utils from '@/utils/utils';
@@ -84,16 +88,18 @@ export default {
   name: 'PulsarOnlineHome',
   components: {
     LinkButton,
+    PulsarOnlineLastWods,
   },
   data() {
     return {
-      date: new Date('11/10/2020'),
+      date: new Date(),
       dateDay: '',
       dateMonth: '',
       fullDate: '',
       liveMessage: '',
       wodVideo: '',
       wodMeet: '',
+      lastWods: [],
     };
   },
   computed: {
@@ -115,14 +121,18 @@ export default {
       .then((space) => space.getEnvironment('master'))
       .then((env) => env.getEntries({
         content_type: 'wod',
-        'fields.date': this.fullDate,
+        'fields.wodDate[lte]': this.date,
       }))
       .then((entries) => {
-        if (entries.items.length > 0 && entries.items[0].fields.wodVideo ) {
-          this.wodVideo = entries.items[0].fields.wodVideo['en-US'];
-        }
-        if (entries.items.length > 0 && entries.items[0].fields.wodMeeting ) {
-          this.wodMeet = entries.items[0].fields.wodMeeting['en-US'];
+        if (entries.items.length > 0) {
+          console.log(entries.items);
+          const todayWod = entries.items.find((item) => item.fields.date['en-US'] === this.fullDate);
+          this.wodVideo = todayWod.fields.wodVideo['en-US'];
+          this.wodMeet = todayWod.fields.wodMeeting['en-US'];
+
+          this.lastWods = entries.items
+            .filter((item) => item.fields.date['en-US'] !== this.fullDate)
+            .map((item) => item.fields);
         }
       });
     },
@@ -149,8 +159,8 @@ export default {
   align-items: center;
   padding-top: calc(56px);
   min-height: calc(100vh - 80px);
-  max-width: 1000px;
   margin: 0 auto;
+  background: black;
 
   @include respond-to(not-phone) {
     min-height: calc(100vh - 64px);
@@ -167,6 +177,7 @@ export default {
     flex-direction: column;
     align-items: center;
     padding-bottom: 1rem;
+    margin-bottom: .25rem;
   }
 
   .online__header {
@@ -174,6 +185,7 @@ export default {
     grid-template-areas: 
       "date live"
       "date online";
+    grid-template-columns: 70px 1fr;
     width: 100%;
     max-width: 400px;
     padding: 1rem;
@@ -187,6 +199,7 @@ export default {
     grid-area: date;
     display: flex;
     flex-direction: column;
+    align-items: center;
     font-weight: 800;
     line-height: 1;
     color: white;
@@ -198,6 +211,28 @@ export default {
     .online__date-month {
       text-transform: uppercase;
       font-weight: 500;
+    }
+  }
+
+  @keyframes on-off {
+    0% {
+      opacity: 0;
+      transform: scale(0);
+    }
+
+    15% {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    85% {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    100% {
+      opacity: 0;
+      transform: scale(0);
     }
   }
 
@@ -218,6 +253,7 @@ export default {
       background: #C5283D;
       border-radius: 50%;
       margin-right: .25rem;
+      animation: on-off 1.5s infinite;
     }
   }
 
@@ -242,7 +278,15 @@ export default {
 
   .online__controls {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
+    width: 100%;
+    max-width: 400px;
+    padding: 0 1rem;
+    margin: 0 auto;
+
+    @include respond-to(not-phone) {
+      justify-content: center;
+    }
 
     .online__control-button {
       margin: 0 .25rem;
