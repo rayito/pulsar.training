@@ -10,13 +10,8 @@
           <span class="last-wods__wod-day">{{ wod.wodDay }}</span>
           <span class="last-wods__wod-month">{{ wod.wodMonth }}</span>
         </div>
-        <div class="last-wods__play">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.9998 0.666664C6.63984 0.666664 0.666504 6.64 0.666504 14C0.666504 21.36 6.63984 27.3333 13.9998 27.3333C21.3598 27.3333 27.3332 21.36 27.3332 14C27.3332 6.64 21.3598 0.666664 13.9998 0.666664ZM11.3332 20L19.3332 14L11.3332 8V20ZM3.33317 14C3.33317 19.88 8.11984 24.6667 13.9998 24.6667C19.8798 24.6667 24.6665 19.88 24.6665 14C24.6665 8.12 19.8798 3.33333 13.9998 3.33333C8.11984 3.33333 3.33317 8.12 3.33317 14Z" fill="white" fill-opacity="0.95"/>
-          </svg>
-        </div>
         <div class="last-wods__link button ghost">
-          VER PIZARRA
+          VER PIZARRA Y VÍDEO
         </div>
       </div>
     </router-link>

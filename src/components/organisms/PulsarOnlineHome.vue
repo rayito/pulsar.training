@@ -12,8 +12,14 @@
         </div>
         <div class="online__link">Reserva tu plaza en AimHarder</div>
       </div>
-      <iframe class="online__video" :src="wodVideoLink" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" modestbranding="1" allowfullscreen></iframe>
-      <div class="online__controls">
+      <iframe v-if="isThereWodToday" 
+              class="online__video" 
+              :src="wodVideoLink" 
+              frameborder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              modestbranding="1" allowfullscreen>
+      </iframe>
+      <div v-if="isThereWodToday" class="online__controls">
         <LinkButton 
           class="online__control-button" 
           button-text="VER PIZARRA" 
@@ -99,6 +105,7 @@ export default {
       liveMessage: '',
       wodVideo: '',
       wodMeet: '',
+      isThereWodToday: false,
       lastWods: [],
     };
   },
@@ -124,27 +131,38 @@ export default {
         'fields.wodDate[lte]': this.date,
       }))
       .then((entries) => {
+        console.log(entries);
         if (entries.items.length > 0) {
           console.log(entries.items);
           const todayWod = entries.items.find((item) => item.fields.date['en-US'] === this.fullDate);
-          this.wodVideo = todayWod.fields.wodVideo['en-US'];
-          this.wodMeet = todayWod.fields.wodMeeting['en-US'];
-
+          console.log(todayWod);
+          if (todayWod) {
+            this.wodVideo = todayWod.fields.wodVideo['en-US'];
+            this.wodMeet = todayWod.fields.wodMeeting['en-US'];
+            this.isThereWodToday = true;
+          } 
+          this.setLiveMessage();
           this.lastWods = entries.items
             .filter((item) => item.fields.date['en-US'] !== this.fullDate)
             .map((item) => item.fields);
         }
       });
     },
+    setLiveMessage: function () {
+      if ( this.isThereWodToday ) {
+        this.liveMessage = this.getLiveMessage();
+        setInterval(() => {
+          this.liveMessage = this.getLiveMessage();
+        }, 60000);
+      } else {
+        this.liveMessage = 'EN DIRECTO el LUNES a las 10H';
+      }
+    },
   },
   created() {
     this.dateDay = lZ(this.date.getDate());
     this.dateMonth = MONTHS[this.date.getMonth()];
     this.fullDate = `${this.dateDay}.${lZ(this.date.getMonth() + 1)}.${this.date.getFullYear()}`;
-    this.liveMessage = this.getLiveMessage();
-    setInterval(() => {
-      this.liveMessage = this.getLiveMessage();
-    }, 60000);
     this.getWod();
   },
 };
