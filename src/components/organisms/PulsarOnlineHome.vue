@@ -131,11 +131,8 @@ export default {
         'fields.wodDate[lte]': this.date,
       }))
       .then((entries) => {
-        console.log(entries);
         if (entries.items.length > 0) {
-          console.log(entries.items);
           const todayWod = entries.items.find((item) => item.fields.date['en-US'] === this.fullDate);
-          console.log(todayWod);
           if (todayWod) {
             this.wodVideo = todayWod.fields.wodVideo['en-US'];
             this.wodMeet = todayWod.fields.wodMeeting['en-US'];
