@@ -2,7 +2,7 @@
   <main class="online-wod">
     <h1 class="online-wod__title">{{ titleDate }}</h1>
     <div v-html="wodDetails" class="online-wod__description"></div>
-    <div v-if="!isToday" class="online__video-wrap">
+    <div v-if="!isToday && wodVideo !== ''" class="online__video-wrap">
       <iframe class="online__video" :src="wodVideoLink" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" modestbranding="1" allowfullscreen></iframe>
     </div>
     <LinkButton 
@@ -72,9 +72,11 @@ export default {
         'fields.date': this.$route.params.date,
       }))
       .then((entries) => {
-        if (entries.items.length > 0) {
+        if (entries.items.length > 0 && entries.items[0].fields.wodDetails) {
           this.wodDetails = entries.items[0].fields.wodDetails['en-US'];
-          this.wodVideo = entries.items[0].fields.wodVideo['en-US'];
+          this.wodVideo = entries.items[0].fields.wodVideo ? entries.items[0].fields.wodVideo['en-US'] : '';
+        } else {
+          this.$router.replace('/pulsar-online');
         }
       });
     },

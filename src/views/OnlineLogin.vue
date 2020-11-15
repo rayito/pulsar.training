@@ -86,7 +86,7 @@ export default {
       .then((space) => space.getEnvironment('master'))
       .then((env) => env.getEntries({
         content_type: 'user',
-        'fields.userMail': this.user,
+        'fields.userMail[match]': this.user,
       }))
       .then((entries) => { 
         if (entries.items && entries.items.length > 0) {
