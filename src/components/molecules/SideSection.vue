@@ -3,21 +3,31 @@
     <h1 class="sidesection__title">{{ sectionTitle }}</h1>
     <p class="sidesection__content">{{ sectionContent }}</p>
     <ActionButton 
+      v-if="Boolean(actionText) && !Boolean(action)"
       class="sidesection__action" 
       :button-text="actionText"
+    />
+    <ContactButton
+      v-if="Boolean(action)"
+      class="request-account__access" 
+      :button-style="actionButtonStyle"
+      :button-text="actionText" 
+      :link-to="action"
     />
   </section>
 </template>
 
 <script>
 import ActionButton from '@/components/atoms/ActionButton.vue';
+import ContactButton from '@/components/atoms/ContactButton.vue';
 
 export default {
   name: 'SideSection',
   components: {
     ActionButton,
+    ContactButton,
   },
-  props: ['section-title', 'section-content', 'action-text'],
+  props: ['section-title', 'section-content', 'action-text', 'action', 'action-button-style'],
 };
 </script>
 

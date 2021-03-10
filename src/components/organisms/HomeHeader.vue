@@ -5,23 +5,30 @@
       <h1 class="bestiaparda__season">TEMPORADA 20/21</h1>
       <div class="bestiaparda__hash">#ModoBestiaPardaON</div>
       <div class="bestiaparda__text">PON A PRUEBA TUS LÍMITES</div>
-      <ActionButton 
+      <ContactButton
         class="bestiaparda__reserve" 
-        button-text="RESERVAR CLASE DE PRUEBA GRATIS"
-        button-style="solid" />
+        button-style="solid"
+        button-text="RESERVAR CLASE DE PRUEBA GRATIS" 
+        :link-to="contactAction"
+      />
     </div>
   </section>
 </template>
 
 <script>
 import SideFloat from '@/components/molecules/SideFloat.vue';
-import ActionButton from '@/components/atoms/ActionButton.vue';
+import ContactButton from '@/components/atoms/ContactButton.vue';
 
 export default {
   name: 'HomeHeader',
   components: {
     SideFloat,
-    ActionButton,
+    ContactButton,
+  },
+  data() {
+    return {
+      contactAction: 'http://api.whatsapp.com/send?phone=+34623030862&text="Hola!"',
+    };
   },
 };
 </script>

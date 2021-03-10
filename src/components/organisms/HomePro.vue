@@ -7,19 +7,27 @@
       imaginarte una vida sin deporte. El rendimiento y la salud en su 
       máxima expresión.
     </p>
-    <ActionButton 
-      button-text="ÚNETE A NUESTRO PRO TRAINING CLUB"
-      class="pro__action" />
+    <ContactButton
+      class="pro__action" 
+      button-style="ghost"
+      button-text="ÚNETE A NUESTRO PRO TRAINING CLUB" 
+      :link-to="contactAction"
+    />
   </section>
 </template>
 
 <script>
-import ActionButton from '@/components/atoms/ActionButton.vue';
+import ContactButton from '@/components/atoms/ContactButton.vue';
 
 export default {
   name: 'HomePro',
   components: {
-    ActionButton,
+    ContactButton,
+  },
+  data() {
+    return {
+      contactAction: 'http://api.whatsapp.com/send?phone=+34623030862&text="Hola!"',
+    };
   },
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <section class="list-component">
+  <section class="construction">
     <h1 class="title">EN CONSTRUCSIÓ</h1>
   </section>
 </template>
@@ -14,12 +14,7 @@ export default {
 <style scoped lang="scss">
 @import "~@/scss/variables.scss";
 
-* {
-  font-family: "Chromoxome", sans-serif;
-}
-
-h1 {
-  color: white;
-  font-size: 2rem;
+.construction {
+  @include view-sizing;
 }
 </style>
