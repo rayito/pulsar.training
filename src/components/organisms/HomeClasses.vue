@@ -4,7 +4,6 @@
       class="classes__sidesection naked"
       :section-title="sideSection.sectionTitle"
       :section-content="sideSection.sectionContent"
-      :action-text="sideSection.actionText"
     />
     <div class="images-block">
       <img src="@/assets/images/mobility.jpg" class="bg-image" alt="">

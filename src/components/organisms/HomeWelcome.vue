@@ -18,6 +18,8 @@
       :section-title="sideSection.sectionTitle"
       :section-content="sideSection.sectionContent"
       :action-text="sideSection.actionText"
+      action-button-style="ghost"
+      :action="sideSection.whatsappLink"
     />
   </section>
 </template>
@@ -35,6 +37,7 @@ export default {
   data() {
     return {
       sideSection: {
+        whatsappLink: 'http://api.whatsapp.com/send?phone=+34623030862&text="Hola!"',
         sectionTitle: 'bienvenido a PūLSAR',
         sectionContent: sideSectionContent,
         actionText: 'ÚNETE A NOSOTROS',

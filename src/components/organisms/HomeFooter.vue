@@ -25,9 +25,12 @@
             <div class="visit__item-content">@pulsar.training</div>
           </li>
         </ul>
-        <ActionButton 
-          button-text="PONTE EN CONTACTO"
-          class="visit__action" />
+        <ContactButton
+          class="visit__action" 
+          button-style="ghost"
+          button-text="PONTE EN CONTACTO" 
+          :link-to="contactAction"
+        />
       </div>
     </div>
     <div class="footer__map"></div>
@@ -35,12 +38,17 @@
 </template>
 
 <script>
-import ActionButton from '@/components/atoms/ActionButton.vue';
+import ContactButton from '@/components/atoms/ContactButton.vue';
 
 export default {
   name: 'HomeFooter',
   components: {
-    ActionButton,
+    ContactButton,
+  },
+  data() {
+    return {
+      contactAction: 'http://api.whatsapp.com/send?phone=+34623030862&text="Hola!"',
+    };
   },
 };
 </script>

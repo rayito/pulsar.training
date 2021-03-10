@@ -5,7 +5,7 @@
       to="/" 
       class="header__logo"
       :class="{ 'header__logo--online': pathOnline }">
-      <img v-if="windowWidth < 768" src="@/assets/images/LogoPulsarAnagramaBlanco.svg">
+      <img v-if="windowWidth < 810" src="@/assets/images/LogoPulsarAnagramaBlanco.svg">
       <img v-else src="@/assets/images/LogoPulsar.svg">
     </router-link>
     
@@ -208,10 +208,6 @@ header {
 }
 
 .header__navbar {
-  @include respond-to(not-phablet) {
-    grid-area: mid;
-  }
-
   ul {
     display: flex;
     justify-content: center;
@@ -263,12 +259,12 @@ header {
   @include respond-to(phablet) {
     position: absolute;
     z-index: 1000;
-    overflow: hidden;
     top: 56px;
     left: 0;
-    height: 0;
     width: 100vw;
+    height: 0;
     background: $pulsar-black;
+    overflow: hidden;
     transition: height ease .3s;
 
     ul {
@@ -309,11 +305,15 @@ header {
   }
 
   @include respond-to(tablet) {
-    grid-area: mid;
-
     ul {
       flex-direction: row;
     }
+  }
+
+  @include respond-to(not-phablet) {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
   }
 }
 
