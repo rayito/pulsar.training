@@ -12,8 +12,7 @@
         </div>
         <div class="online__link">Reserva tu plaza en AimHarder</div>
       </div>
-      <iframe v-if="isThereWodToday" 
-              class="online__video" 
+      <iframe class="online__video" 
               :src="wodVideoLink" 
               frameborder="0" 
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
@@ -111,7 +110,7 @@ export default {
   },
   computed: {
     wodVideoLink: function () { 
-      return `https://www.youtube.com/embed/${this.wodVideo}?modestbranding=1`;
+      return `https://www.youtube.com/embed/${this.wodVideo || '8lU4HYBxUaI'}?modestbranding=1`;
     },
   },
   methods: {
@@ -152,7 +151,7 @@ export default {
           this.liveMessage = this.getLiveMessage();
         }, 60000);
       } else {
-        this.liveMessage = 'EN DIRECTO el LUNES a las 10H';
+        this.liveMessage = 'SIN CLASES planificadas para hoy';
       }
     },
   },
